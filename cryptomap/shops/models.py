@@ -53,6 +53,9 @@ class ShopDescription(models.Model):
     pay_in_rub = models.BooleanField(default=True)
     pay_in_btc = models.BooleanField(default=True)
 
+    def get_absolute_url(self):
+        return reverse('view_shops', kwargs={'shops_id': self.shop_id})
+
     def __str__(self):
         return self.shop.title
 

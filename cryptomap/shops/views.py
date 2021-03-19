@@ -23,3 +23,8 @@ def get_category(request, category_id):
     }
 
     return render(request, template_name='shops/category.html', context=context)
+
+
+def view_shops(request, shops_id):
+    shops_item = ShopDescription.objects.get(shop_id=shops_id)
+    return render(request, 'shops/view_shops.html', {"shops_item": shops_item})
