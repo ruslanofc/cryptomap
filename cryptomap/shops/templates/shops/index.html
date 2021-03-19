@@ -13,7 +13,7 @@
 {% for item in shopsDescriptions %}
 <div class="card mt-3 mb-3">
   <div class="card-header">
-    Категория: <a href="{% url 'shops_by_category' item.category.pk %}">{{item.category}}</a>
+    Категория: <a href="{{ item.category.get_absolute_url }}">{{item.category}}</a>
   </div>
   <div class="card-body">
     <div class="media">

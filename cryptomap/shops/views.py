@@ -17,7 +17,6 @@ def index(request):
 def get_category(request, category_id):
     shopsDescriptions = ShopDescription.objects.filter(category_id=category_id)
     category = Category.objects.get(pk=category_id)
-
     context = {
         'shopsDescriptions': shopsDescriptions,
         'category': category
