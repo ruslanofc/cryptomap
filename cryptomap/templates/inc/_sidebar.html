@@ -1,4 +1,6 @@
+{% load shops_tags%}
 <div class="list-group">
+  {% get_categories as categories%}
   {% for category in categories %}
   <a href="{% url 'shops_by_category' category.pk %}" class="list-group-item list-group-item-action">{{category.title}}</a>
   {% endfor %}
