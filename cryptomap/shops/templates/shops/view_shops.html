@@ -27,6 +27,18 @@
         <p class="card-text">{{shops_item.email}}</p>
         <p class="card-text">{{shops_item.url}}</p>
         <p class="card-text">{{shops_item.description}}</p>
+
+        {% for product in products%}
+        <div class="card mb-3" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">{{product.title}}</h5>
+            <p class="card-text">{{product.price_rub |floatformat:"0" }} рублей</p>
+            <p class="card-text">{{product.price_btc}} btc</p>
+            <a href="#" class="btn btn-primary">Поподробнее</a>
+          </div>
+        </div>
+        {% endfor %}
+
       </div>
     </div>
   </div>

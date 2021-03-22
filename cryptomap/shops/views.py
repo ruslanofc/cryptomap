@@ -27,4 +27,6 @@ def get_category(request, category_id):
 
 def view_shops(request, shops_id):
     shops_item = ShopDescription.objects.get(shop_id=shops_id)
-    return render(request, 'shops/view_shops.html', {"shops_item": shops_item})
+
+    products = Product.objects.filter(shop=shops_id)
+    return render(request, 'shops/view_shops.html', {"shops_item": shops_item, "products": products})
