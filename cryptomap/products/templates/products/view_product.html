@@ -1,28 +1,29 @@
 {% extends 'base.html' %}
 
+{% block sidebar %}
+{% include 'inc/_sidebar.html' %}
+{% endblock %}
+
 {% block content %}
 
-<div class="card mt-3 mb-3">
-<!--  <div class="card-header">-->
-<!--    Категория: <a href="{{ shops_item.category.get_absolute_url }}">{{shops_item.category}}</a>-->
-<!--  </div>-->
-  <div class="card-body">
-    <div class="media">
+<div class="card mb-3 mt-3" style="max-width: 740px;">
+  <div class="row g-0">
+    <div class="col-md-4">
       {% if products_descriptions.photo %}
       <img src="{{ products_descriptions.photo.url}}" width="350" class="mr-3" alt="">
       {% else %}
       <img src="https://picsum.photos/id/1060/200/300/?blur" alt="">
       {% endif %}
-      <div class="media-body">
+    </div>
+    <div class="col-ml-8 ">
+      <div class="card-body mr-1 ml-5">
         <h5 class="card-title">{{products.title}}</h5>
         <p class="card-text">{{products_descriptions.description}}</p>
-
-
+        <p class="card-text">{{products.price_rub|floatformat:"0" }} рублей</p>
+        <p class="card-text">{{products.price_btc}} btc</p>
+        <p class="card-text"><small class="text-muted">Размещен: {{products.created_at }}</small></p>
       </div>
     </div>
-  </div>
-  <div class="card-footer text-muted">
-    {{product.created_at }}
   </div>
 </div>
 

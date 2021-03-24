@@ -18,4 +18,4 @@ def show_price(request):
     if price != last_price:
       return {'btc_price': price}
       last_price = price
-    time.sleep(3)
+    time.sleep(10)

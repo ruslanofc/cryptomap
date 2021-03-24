@@ -1,5 +1,5 @@
 {% load shops_tags%}
-<div class="list-group">
+<div class="list-group mt-3">
   {% get_categories as categories%}
   {% for category in categories %}
   <a href="{{ category.get_absolute_url }}" class="list-group-item list-group-item-action">{{category.title}}</a>
