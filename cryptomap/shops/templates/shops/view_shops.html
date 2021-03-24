@@ -34,7 +34,7 @@
             <h5 class="card-title">{{product.title}}</h5>
             <p class="card-text">{{product.price_rub |floatformat:"0" }} рублей</p>
             <p class="card-text">{{product.price_btc}} btc</p>
-            <a href="#" class="btn btn-primary">Поподробнее</a>
+            <a href="{{ product.get_absolute_url }}" class="btn btn-primary">Поподробнее</a>
           </div>
         </div>
         {% endfor %}

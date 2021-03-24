@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card mt-3 mb-3">
+<!--  <div class="card-header">-->
+<!--    Категория: <a href="{{ shops_item.category.get_absolute_url }}">{{shops_item.category}}</a>-->
+<!--  </div>-->
+  <div class="card-body">
+    <div class="media">
+      {% if products_descriptions.photo %}
+      <img src="{{ products_descriptions.photo.url}}" width="350" class="mr-3" alt="">
+      {% else %}
+      <img src="https://picsum.photos/id/1060/200/300/?blur" alt="">
+      {% endif %}
+      <div class="media-body">
+        <h5 class="card-title">{{products.title}}</h5>
+        <p class="card-text">{{products_descriptions.description}}</p>
+
+
+      </div>
+    </div>
+  </div>
+  <div class="card-footer text-muted">
+    {{product.created_at }}
+  </div>
+</div>
+
+{% endblock %}
