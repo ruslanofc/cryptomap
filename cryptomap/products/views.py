@@ -19,11 +19,18 @@ def view_product(request, product_id):
 
 
 def get_products_by_category(request, category_id):
+    # для вывода информации о продукте
     productsDescriptions = ProductDescription.objects.filter(category_id=category_id)
+
+    # для вывода тайтла
     category = ProductCategory.objects.get(pk=category_id)
+
+    # контекст для кнопки перехода в магазин
+    shopsDescriptions = ShopDescription.objects.all()
     context = {
         'productsDescriptions': productsDescriptions,
-        'category': category
+        'category': category,
+        'shopsDescriptions': shopsDescriptions
     }
 
     return render(request, template_name='products/all_products_by_category.html', context=context)
