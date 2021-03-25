@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block sidebar %}
+{% include 'inc/_sidebar.html' %}
+{% endblock %}
+
+{% block title %}
+  {{ category.title }}
+{% endblock %}
+
+{% block content %}
+
+
+{% for product_description in productsDescriptions %}
+<div class="card mb-3 mt-3" style="max-width: 740px;">
+  <div class="row g-0">
+    <div class="col-md-4">
+      {% if product_description.photo %}
+      <img src="{{ product_description.photo.url}}" width="350" class="mr-3" alt="">
+      {% else %}
+      <img src="https://picsum.photos/id/1060/200/300/?blur" alt="">
+      {% endif %}
+    </div>
+    <div class="col-ml-8 ">
+      <div class="card-body mr-1 ml-5">
+        <h5 class="card-title">{{product_description.product.title}}</h5>
+        <p class="card-text">{{product_description.product.shop}}</p>
+        <p class="card-text">{{product_description.description}}</p>
+        <p class="card-text">{{product_description.product.price_rub|floatformat:"0" }} рублей</p>
+        <p class="card-text">{{product_description.product.price_btc}} btc</p>
+        <p class="card-text"><small class="text-muted">Размещен: {{product_description.product.created_at }}</small></p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+
+{% endblock %}

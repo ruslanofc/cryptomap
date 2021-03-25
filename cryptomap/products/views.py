@@ -15,4 +15,15 @@ def view_product(request, product_id):
 #     context = {
 #         'title': 'Все товары',
 #     }
-#     return render(request, template_name='products/all_products.html', context=context)
+#     return render(request, template_name='products/all_products_by_category.html', context=context)
+
+
+def get_products_by_category(request, category_id):
+    productsDescriptions = ProductDescription.objects.filter(category_id=category_id)
+    category = ProductCategory.objects.get(pk=category_id)
+    context = {
+        'productsDescriptions': productsDescriptions,
+        'category': category
+    }
+
+    return render(request, template_name='products/all_products_by_category.html', context=context)

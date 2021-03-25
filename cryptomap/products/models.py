@@ -6,6 +6,9 @@ from django.urls import reverse
 class ProductCategory(models.Model):
     title = models.CharField(max_length=150)
 
+    def get_absolute_url(self):
+        return reverse('products_by_category', kwargs={'category_id': self.pk})
+
     def __str__(self):
         return self.title
 

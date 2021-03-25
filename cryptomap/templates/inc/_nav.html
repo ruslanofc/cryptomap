@@ -36,7 +36,7 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         {% for product_category in products_categories %}
-                        <li><a class="dropdown-item" href="{% url 'home' %}">{{product_category.title}}</a></li>
+                        <li><a class="dropdown-item" href="{{ product_category.get_absolute_url }}">{{product_category.title}}</a></li>
                         {% endfor %}
                     </ul>
                 </li>
