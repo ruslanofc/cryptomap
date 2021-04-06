@@ -47,8 +47,8 @@ class ShopDescription(models.Model):
         on_delete=models.CASCADE
     )
     photo = models.ImageField(upload_to='photos/%Y/%m/%d/')
-    email = models.EmailField(max_length=300, blank=True, unique=True)
-    url = models.URLField(max_length=300, blank=True)
+    email = models.EmailField(max_length=250, blank=True, unique=True)
+    url = models.URLField(max_length=250, blank=True)
     telegram_url = models.URLField(max_length=300, blank=True)
     pay_in_rub = models.BooleanField(default=True)
     pay_in_btc = models.BooleanField(default=True)

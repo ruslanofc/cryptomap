@@ -40,7 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'shops.apps.ShopsConfig',
     'products.apps.ProductsConfig',
+    'user.apps.UserConfig'
 ]
+
+AUTH_USER_MODEL = 'user.CustomUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -82,7 +85,7 @@ DATABASES = {
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': BASE_DIR / 'db.sqlite3',
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'django_cryptomap',
+        'NAME': 'cryptomap',
         'USER': 'root',
         'PASSWORD': 'root',
         'HOST': 'localhost',
