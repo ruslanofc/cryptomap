@@ -40,8 +40,9 @@
                         {% endfor %}
                     </ul>
                 </li>
-
-                <li class="nav-item"><a class="nav-link" href="{% url 'add_shops' %}">Добавить магазин</a></li>
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'add_shops' %}">Добавить магазин</a></li>
+                {% endif %}
             </ul>
         </div>
         <span class="navbar-text">
@@ -50,9 +51,11 @@
 
         <span class="navbar-text">
             {% if request.user.is_authenticated %}
-                <p>Hello, {{ request.user.username }} | <a href="{% url 'logout' %}">Logout</a></p>
+                <p>Hello, {{ request.user.username }} |
+                <a href="{% url 'logout' %}">Logout</a> |
+                <a href="{% url 'account' %}">Account</a></p>
             {% else %}
-                <p><a href="{% url 'register' %}">Register</a> | <a href="#">Login</a></p>
+                <p><a href="{% url 'register' %}">Register</a> | <a href="{% url 'login' %}">Login</a></p>
             {% endif %}
         </span>
     </div>
