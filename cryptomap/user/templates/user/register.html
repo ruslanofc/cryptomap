@@ -4,35 +4,44 @@
   {{ title }} - {{ block.super}}
 {% endblock %}
 
-{% block sidebar %}
-{% include 'inc/_sidebar.html' %}
-{% endblock %}
-
 {% block content %}
 
-<h2>Register</h2>
-<form method="post">
+<form class="form-signin" method="post">{% csrf_token %}
 
-    {% csrf_token %}
+    <h1 class="h3 mb-3 fw-normal">Register</h1>
+
+    <div class="form-floating mb-3">
+        <input type="email" name="email" class="form-control" id="floatingInput" required placeholder="Email address">
+        <label for="floatingInput">Email address</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="text" name="username" class="form-control" id="inputUsername" required placeholder="Username">
+        <label for="inputUsername">Username</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="password" name="password1" class="form-control" id="inputPassword1" required placeholder="Password">
+        <label for="inputPassword1">Password</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="password" name="password2" class="form-control" id="inputPassword2" required placeholder="Confirm Password">
+        <label for="inputPassword2">Confirm password</label>
+    </div>
 
     {% for field in registration_form  %}
-
         <p>
-            {{ field.label_tag }}
-            {{ field }}
-
-            {% if field.help_text %}
-                <small style="color: grey;">{{ field.help_text }}</small>
-            {% endif %}
-
-            {% for error in field.errors %}
-                <small style="color: grey;">{{ error }}</small>
+            {% for error in field.errors  %}
+                <p style="color: red;">{{ error }}</p>
             {% endfor %}
         </p>
-
     {% endfor %}
 
-    <button type="submit">Register</button>
+    {% if registration_form.non_field_errors %}
+        <div style="color:red;">
+            <p>{{ registration_form.non_field_errors }}</p>
+        </div>
+    {% endif %}
+
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Register</button>
 </form>
 
 {% endblock %}

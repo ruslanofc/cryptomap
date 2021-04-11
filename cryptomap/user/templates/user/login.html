@@ -10,28 +10,25 @@
 
 {% block content %}
 
-<h2>Login</h2>
-<form method="post">
+<form class="form-signin" method="post">{% csrf_token %}
 
-    {% csrf_token %}
+    <h1 class="h3 mb-3 fw-normal">Login</h1>
+
+    <div class="form-floating mb-3">
+        <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+        <label for="floatingInput">Email address</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
+        <label for="floatingPassword">Password</label>
+    </div>
 
     {% for field in login_form  %}
-
         <p>
-            {{ field.label_tag }}
-            {{ field }}
-
-            {% if field.help_text %}
-                <small style="color: grey;">{{ field.help_text }}</small>
-            {% endif %}
+            {% for error in field.errors  %}
+                <p style="color: red;">{{ error }}</p>
+            {% endfor %}
         </p>
-
-    {% endfor %}
-
-    {% for field in login_form  %}
-        {% for error in field.errors  %}
-            <p style="color: red;">{{ error }}</p>
-        {% endfor %}
     {% endfor %}
 
     {% if login_form.non_field_errors %}
@@ -40,7 +37,9 @@
         </div>
     {% endif %}
 
-    <button type="submit">Log in</button>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
 </form>
 
-{% endblock %}
+
+
+{% endblock content %}
