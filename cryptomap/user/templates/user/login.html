@@ -37,8 +37,12 @@
         </div>
     {% endif %}
 
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+    <button class="w-50 btn btn-lg btn-primary mb-3" type="submit">Sign in</button>
 </form>
+
+<div class=".d-flex flex-column">
+    <a class="m-auto mb-3" href="{% url 'password_reset' %}">Reset password</a>
+</div>
 
 
 
