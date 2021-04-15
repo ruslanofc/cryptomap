@@ -58,3 +58,10 @@ class CustomUser(AbstractUser):
         return True
 
 
+class UserTrackedItems(models.Model):
+    owner = models.ForeignKey('CustomUser', null=True, verbose_name='Владелец', on_delete=models.CASCADE)
+    products = models.ManyToManyField(Product, blank=True)
+    total_products = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return str(self.id)

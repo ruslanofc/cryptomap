@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from user.forms import RegistrationForm, CustomUserAuthenticationForm, AccountUpdateForm
-
+from django.views.generic import DetailView, View
+from .models import CustomUser, UserTrackedItems
+from products.models import Product
 
 def registration_view(request):
     context = {}
@@ -78,3 +80,21 @@ def account_view(request):
         )
     context['account_form'] = form
     return render(request, 'user/account.html', context)
+
+
+class UserTrackedItemsView(View):
+    def get(self, request, *args, **kwargs):
+        user = CustomUser.objects.get(username=request.user.username)
+        items = UserTrackedItems.objects.get(owner=user)
+
+        return render(request, 'user/tracked_items.html', {'items': items})
+
+
+class AddToTrackedItemsView(View):
+    def get(self, request, product_id, *args, **kwargs):
+        customer = CustomUser.objects.get(username=request.user.username)
+        trackedItems = UserTrackedItems.objects.get(owner=customer)
+        product = Product.objects.get(pk=product_id)
+        trackedItems.products.add(product)
+
+        return redirect('tracked_items')

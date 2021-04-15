@@ -1,8 +1,12 @@
-{% load shops_tags%}
-{% get_categories as categories%}
+{% load shops_tags %}
+{% get_categories as categories %}
 
-{% load products_tags%}
-{% get_products_categories as products_categories%}
+{% load products_tags %}
+{% get_products_categories as products_categories %}
+
+{% load user_tags %}
+{% get_total_products as total_products %}
+
 
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -51,8 +55,18 @@
 
         <span class="navbar-text">
             {% if request.user.is_authenticated %}
-                <a class="p-2 text-dark" href="{% url 'account' %}" >{{ request.user.username }}<a> |
-                <a class="p-2 text-dark" href="{% url 'logout' %}">Logout</a>
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-dark" href="{% url 'home' %}" id="navbarDropdownMenuLink"
+                       role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ request.user.username }}
+                    </a>
+                    <ul class="dropdown-menu text-dark" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item" href="{% url 'account' %}">Account</a></li>
+                        <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                        <li><a class="dropdown-item" href="{% url 'tracked_items' %}">Отслеживаемые товары <span class="badge badge-pill badge-primary">{{total_products}}</span></a></li>
+                    </ul>
+                </div>
             {% else %}
                 <a class="btn btn-outline-primary" href="{% url 'register' %}">Register</a> | <a class="p-2 text-dark outline" href="{% url 'login' %}">Log in</a>
             {% endif %}
