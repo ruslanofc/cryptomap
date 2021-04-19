@@ -7,7 +7,7 @@
 {% load user_tags %}
 {% get_total_products as total_products %}
 
-
+{% load tracker_tags %}
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
@@ -50,7 +50,7 @@
             </ul>
         </div>
         <span class="navbar-text p-2 text-dark">
-            1 BTC = {{ btc_price }}
+            1 BTC = {% get_price_btc %} руб
         </span>
 
         <span class="navbar-text">
@@ -67,7 +67,7 @@
                         <li><a class="dropdown-item" href="{% url 'view_tracker' %}">Tracker</a></li>
 
                         <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
-                        <li><a class="dropdown-item" href="{% url 'tracked_items' %}">Отслеживаемые товары <span class="badge badge-pill badge-primary">{{total_products}}</span></a></li>
+<!--                        <li><a class="dropdown-item" href="{% url 'tracked_items' %}">Отслеживаемые товары <span class="badge badge-pill badge-primary">{{total_products}}</span></a></li>-->
                     </ul>
                 </div>
             {% else %}

@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load tracker_tags %}
+
 {% block title %}
    - {{ block.super}}
 {% endblock %}
@@ -10,39 +12,25 @@
 
 {% block content %}
 
-<div class="card mt-3 mb-3">
-
-  <div class="card-body">
-    <div class="media">
-<!--      {% if shops_item.photo %}-->
-<!--      <img src="{{ shops_item.photo.url}}" width="350" class="mr-3" alt="">-->
-<!--      {% else %}-->
-<!--      <img src="https://picsum.photos/id/1060/200/300/?blur" alt="">-->
-<!--      {% endif %}-->
-<!--      <div class="media-body">-->
-<!--        <h5 class="card-title">{{shops_item.shop.title}}</h5>-->
-<!--        <p class="card-text">{{shops_item.shop.address}}</p>-->
-<!--        <p class="card-text">{{shops_item.email}}</p>-->
-<!--        <p class="card-text">{{shops_item.url}}</p>-->
-<!--        <p class="card-text">{{shops_item.description}}</p>-->
-
-        {% for product in tracker.products.all%}
-        <div class="card mb-3" style="width: 18rem;">
-          <div class="card-body">
-            <h5 class="card-title">{{product.product.title}}</h5>
-            <p class="card-text">{{product.beginning_price_rub |floatformat:"0" }} рублей</p>
-            <p class="card-text">{{product.beginning_price_btc}} btc</p>
-            <a href="{{ product.get_absolute_url }}" class="btn btn-primary">Поподробнее</a>
-          </div>
-        </div>
-        {% endfor %}
-
-      </div>
-    </div>
-  </div>
-  <div class="card-footer text-muted">
-    {{tracker.created_at }}
-  </div>
-</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Наименование</th>
+      <th scope="col">Цена в рублях</th>
+      <th scope="col">Цена в биткоинах</th>
+      <th scope="col">Цена в биткоинах сейчас</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for product in tracker.products.all%}
+    <tr>
+      <th scope="row">{{product.product.title}}</th>
+      <td>{{product.beginning_price_rub |floatformat:"0" }} рублей</td>
+      <td>{{product.beginning_price_btc}} btc</td>
+      <td>{% multiply btc_price  product.beginning_price_btc %}  </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 
 {% endblock %}
