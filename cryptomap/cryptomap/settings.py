@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'shops.apps.ShopsConfig',
     'products.apps.ProductsConfig',
-    'user.apps.UserConfig'
+    'user.apps.UserConfig',
+    'tracker.apps.TrackerConfig'
 ]
 
 AUTH_USER_MODEL = 'user.CustomUser'
@@ -87,6 +88,7 @@ DATABASES = {
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': BASE_DIR / 'db.sqlite3',
         'ENGINE': 'django.db.backends.mysql',
+        'CONN_MAX_AGE': 3600,
         'NAME': 'cryptomap',
         'USER': 'root',
         'PASSWORD': 'root',

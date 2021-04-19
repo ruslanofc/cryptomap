@@ -15,6 +15,9 @@
 
     <h1 class="h3 mb-3 fw-normal ">Account</h1>
 
+    <a class="m-auto mb-3" href="{% url 'password_change' %}">Tracker</a>
+
+
     <div class="form-floating mb-3">
         <input type="email" name="email" class="form-control" id="inputEmail" placeholder="name@example.com" value={{account_form.initial.email}}>
         <label for="inputEmail">Email address</label>

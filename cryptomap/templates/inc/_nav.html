@@ -63,6 +63,9 @@
                     </a>
                     <ul class="dropdown-menu text-dark" aria-labelledby="navbarDropdownMenuLink">
                         <li><a class="dropdown-item" href="{% url 'account' %}">Account</a></li>
+
+                        <li><a class="dropdown-item" href="{% url 'view_tracker' %}">Tracker</a></li>
+
                         <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
                         <li><a class="dropdown-item" href="{% url 'tracked_items' %}">Отслеживаемые товары <span class="badge badge-pill badge-primary">{{total_products}}</span></a></li>
                     </ul>
