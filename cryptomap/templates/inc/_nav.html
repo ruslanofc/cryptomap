@@ -4,8 +4,7 @@
 {% load products_tags %}
 {% get_products_categories as products_categories %}
 
-{% load user_tags %}
-{% get_total_products as total_products %}
+
 
 {% load tracker_tags %}
 
@@ -67,7 +66,6 @@
                         <li><a class="dropdown-item" href="{% url 'view_tracker' %}">Tracker</a></li>
 
                         <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
-<!--                        <li><a class="dropdown-item" href="{% url 'tracked_items' %}">Отслеживаемые товары <span class="badge badge-pill badge-primary">{{total_products}}</span></a></li>-->
                     </ul>
                 </div>
             {% else %}

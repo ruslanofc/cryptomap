@@ -12,6 +12,14 @@
 
 {% block content %}
 
+{% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{ message }}</strong>
+      </div>
+    {% endfor %}
+{% endif %}
+
 <table class="table">
   <thead>
     <tr>
@@ -19,6 +27,7 @@
       <th scope="col">Цена в рублях</th>
       <th scope="col">Цена в биткоинах</th>
       <th scope="col">Цена в биткоинах сейчас</th>
+      <th scope="col">Всего отслеживаемых: {{ tracker.total_products}}</th>
     </tr>
   </thead>
   <tbody>
@@ -27,7 +36,7 @@
       <th scope="row">{{product.product.title}}</th>
       <td>{{product.beginning_price_rub |floatformat:"0" }} рублей</td>
       <td>{{product.beginning_price_btc}} btc</td>
-      <td>{% multiply btc_price  product.beginning_price_btc %}  </td>
+      <td>{% multiply price_btc product.beginning_price_btc %}</td>
     </tr>
     {% endfor %}
   </tbody>

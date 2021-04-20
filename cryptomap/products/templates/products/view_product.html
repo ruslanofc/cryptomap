@@ -6,6 +6,8 @@
 
 {% block content %}
 
+
+
 <div class="card mb-3 mt-3" style="max-width: 740px;">
   <div class="row g-0">
     <div class="col-md-4">
@@ -24,6 +26,7 @@
         <hr>
         {% if request.user.is_authenticated %}
           <a href="{% url 'add_to_tracked_items' product_id=products.id%}"><button class=" mb-3 btn btn-primary">Отслеживать</button></a>
+          <a href="{% url 'add_to_tracker' product_id=products.id%}"><button class=" mb-3 btn btn-primary">Track</button></a>
         {% else %}
            <a class="btn btn-outline-primary" href="{% url 'register' %}">Register</a> | <a class="p-2 text-dark outline" href="{% url 'login' %}">Log in</a>
         {% endif %}
