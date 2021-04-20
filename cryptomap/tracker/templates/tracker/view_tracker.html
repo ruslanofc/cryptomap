@@ -29,7 +29,7 @@
       <th scope="col">Цена в рублях</th>
       <th scope="col">Цена в биткоинах</th>
       <th scope="col">Цена в биткоинах сейчас</th>
-      <th id="" scope="col">Всего отслеживаемых: {{ tracker.total_products}}</th>
+      <th scope="col">Процент изменения</th>
     </tr>
   </thead>
   <tbody>
@@ -39,6 +39,11 @@
       <td>{{product.beginning_price_rub |floatformat:"0" }} рублей</td>
       <td>{{product.beginning_price_btc}} btc</td>
       <td>{% multiply price_btc product.beginning_price_btc %}</td>
+      <td>{{product.price_change}} %</td>
+      <td align="center">
+        <button class="btn btn-success form-control" onClick="editUser({{user.id}})" data-toggle="modal"
+                data-target="#myModal")>Изменить</button>
+      </td>
       <td align="center">
         <button class="btn btn-danger form-control" onClick="deleteItem({{product.id}})">Удалить</button>
       </td>
@@ -46,6 +51,10 @@
     {% endfor %}
   </tbody>
 </table>
+
+<div class="card-footer text-muted">
+  <p id="" >Всего отслеживаемых: {{ tracker.total_products}}</p>
+</div>
 
 {% block javascript %}
 <script>
