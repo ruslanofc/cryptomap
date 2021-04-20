@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from .models import *
 from .bitcoin import get_btc_price
@@ -28,3 +29,18 @@ class AddToTrackerView(View):
         else:
             messages.add_message(request, messages.INFO, "Товар уже отслеживается")
         return redirect('view_tracker')
+
+
+class DeleteItem(View):
+    def get(self, request):
+        user = CustomUser.objects.get(username=request.user.username)
+        id1 = request.GET.get('id', None)
+
+        tracker = UserTracker.objects.get(owner=user)
+        tracker.total_products = F('total_products') - 1
+
+        TrackedProduct.objects.get(id=id1).delete()
+        data = {
+            'deleted': True
+        }
+        return JsonResponse(data)

@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+
+
 {% load tracker_tags %}
 
 {% block title %}
@@ -20,26 +22,51 @@
     {% endfor %}
 {% endif %}
 
-<table class="table">
+<table id="itemTable" class="table" >
   <thead>
     <tr>
       <th scope="col">Наименование</th>
       <th scope="col">Цена в рублях</th>
       <th scope="col">Цена в биткоинах</th>
       <th scope="col">Цена в биткоинах сейчас</th>
-      <th scope="col">Всего отслеживаемых: {{ tracker.total_products}}</th>
+      <th id="" scope="col">Всего отслеживаемых: {{ tracker.total_products}}</th>
     </tr>
   </thead>
   <tbody>
     {% for product in tracker.products.all%}
-    <tr>
+    <tr id="item-{{product.id}}">
       <th scope="row">{{product.product.title}}</th>
       <td>{{product.beginning_price_rub |floatformat:"0" }} рублей</td>
       <td>{{product.beginning_price_btc}} btc</td>
       <td>{% multiply price_btc product.beginning_price_btc %}</td>
+      <td align="center">
+        <button class="btn btn-danger form-control" onClick="deleteItem({{product.id}})">Удалить</button>
+      </td>
     </tr>
     {% endfor %}
   </tbody>
 </table>
 
+{% block javascript %}
+<script>
+function deleteItem(id) {
+  var action = confirm("Действительно хотите удалить этот товар из списка отслеживаемых?");
+  if (action != false) {
+    $.ajax({
+        url: '{% url "delete_tracker_item" %}',
+        data: {
+            'id': id,
+        },
+        dataType: 'json',
+        success: function (data) {
+            if (data.deleted) {
+              $("#itemTable #item-" + id).remove();
+
+            }
+        }
+    });
+  }
+}
+</script>
+{% endblock javascript %}
 {% endblock %}
