@@ -1,9 +1,12 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from user.forms import RegistrationForm, CustomUserAuthenticationForm, AccountUpdateForm
+from user.forms import RegistrationForm, CustomUserAuthenticationForm, AccountUpdateForm, ContactForm
 from django.views.generic import DetailView, View
 from .models import CustomUser
 from products.models import Product
+from django.core.mail import send_mail
+
 
 def registration_view(request):
     context = {}
@@ -81,4 +84,20 @@ def account_view(request):
     context['account_form'] = form
     return render(request, 'user/account.html', context)
 
+
+def contact_form_view(request):
+    if request.POST:
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            mail = send_mail(form.cleaned_data['subject'], form.cleaned_data['content'], 'cryptomap2021@gmail.com', ['ruslanofcourse@gmail.com'], fail_silently=False)
+            if mail:
+                messages.add_message(request, messages.INFO, 'Письмо отправлено')
+                return redirect('contact_form')
+            else:
+                messages.add_message(request, messages.INFO, 'Ошибка отправки')
+        else:
+            messages.add_message(request, messages.INFO, 'Ошибка, заполните все поля')
+    else:  # get request
+        form = ContactForm()
+    return render(request, 'user/contact_form.html', {'form': form})
 
