@@ -89,7 +89,7 @@ def contact_form_view(request):
     if request.POST:
         form = ContactForm(request.POST)
         if form.is_valid():
-            mail = send_mail(form.cleaned_data['subject'], form.cleaned_data['content'], 'cryptomap2021@gmail.com', ['ruslanofcourse@gmail.com'], fail_silently=False)
+            mail = send_mail(form.cleaned_data['subject'], form.cleaned_data['content'], 'cryptomap2021@gmail.com', ['cryptomap2021@gmail.com'], fail_silently=False)
             if mail:
                 messages.add_message(request, messages.INFO, 'Письмо отправлено')
                 return redirect('contact_form')
