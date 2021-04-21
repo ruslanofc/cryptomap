@@ -31,16 +31,37 @@ class AddToTrackerView(View):
         return redirect('view_tracker')
 
 
+class UpdateCrud(View):
+    def  get(self, request):
+        id1 = request.GET.get('id', None)
+        percent = request.GET.get('percent', None)
+
+        obj = TrackedProduct.objects.get(id=id1)
+        obj.price_change = percent
+
+        obj.save()
+
+        user = {'price_change': obj.price_change}
+
+        data = {
+            'user': user
+        }
+        return JsonResponse(data)
+
+
 class DeleteItem(View):
     def get(self, request):
         user = CustomUser.objects.get(username=request.user.username)
+
         id1 = request.GET.get('id', None)
 
         tracker = UserTracker.objects.get(owner=user)
         tracker.total_products = F('total_products') - 1
-
+        tracker.save()
         TrackedProduct.objects.get(id=id1).delete()
+
         data = {
-            'deleted': True
+            'deleted': True,
+            # 'count': a
         }
         return JsonResponse(data)

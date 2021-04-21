@@ -17,7 +17,7 @@
 {% if messages %}
     {% for message in messages %}
       <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>{{ message }}</strong>
+        <strong id="successMessage">{{ message }}</strong>
       </div>
     {% endfor %}
 {% endif %}
@@ -53,11 +53,89 @@
 </table>
 
 <div class="card-footer text-muted">
-  <p id="" >Всего отслеживаемых: {{ tracker.total_products}}</p>
+  <p >Всего отслеживаемых:<span id="countItems">{{ tracker.total_products}}</span> </p>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">Update User</h4>
+      </div>
+      <form id="updateUser" action="">
+        <div class="modal-body">
+          <label for="percent">Процент изменения</label>
+          <input class="form-control" id="form-age" type="number" name="formPercent" min=10 max=100/>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
 
 {% block javascript %}
 <script>
+// Create Django Ajax Call
+$("form#updateUser").submit(function() {
+    var idInput = $('input[name="formId"]').val().trim();
+
+    var percentInput = $('input[name="formPercent"]').val().trim();
+    if (percentInput) {
+        // Create Ajax Call
+        $.ajax({
+            url: '{% url "crud_ajax_update" %}',
+            data: {
+                'id': idInput,
+                'percent': percentInput
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (data.user) {
+                  updateToUserTabel(data.user);
+                }
+            }
+        });
+       } else {
+        alert("All fields must have a valid value.");
+    }
+    $('form#updateUser').trigger("reset");
+    $('#myModal').modal('hide');
+    return false;
+});
+
+// Update Django Ajax Call
+function editUser(id) {
+  if (id) {
+    tr_id = "#user-" + id;
+    name = $(tr_id).find(".userName").text();
+    address = $(tr_id).find(".userAddress").text();
+    age = $(tr_id).find(".userAge").text();
+    $('#form-id').val(id);
+    $('#form-name').val(name);
+    $('#form-address').val(address);
+    $('#form-age').val(age);
+  }
+}
+
+function updateToUserTabel(user){
+    $("#userTable #user-" + user.id).children(".userData").each(function() {
+        var attr = $(this).attr("name");
+        if (attr == "name") {
+          $(this).text(user.name);
+        } else if (attr == "address") {
+          $(this).text(user.address);
+        } else {
+          $(this).text(user.age);
+        }
+      });
+}
+
 function deleteItem(id) {
   var action = confirm("Действительно хотите удалить этот товар из списка отслеживаемых?");
   if (action != false) {
@@ -70,7 +148,8 @@ function deleteItem(id) {
         success: function (data) {
             if (data.deleted) {
               $("#itemTable #item-" + id).remove();
-
+              $("#successMessage").text("Товар успешно удален");
+<!--              $("#countItems").text(count);-->
             }
         }
     });
