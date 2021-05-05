@@ -1,7 +1,5 @@
 {% extends 'base.html' %}
 
-
-
 {% load tracker_tags %}
 
 {% block title %}
@@ -29,7 +27,8 @@
       <th scope="col">Цена в рублях</th>
       <th scope="col">Цена в биткоинах</th>
       <th scope="col">Цена в биткоинах сейчас</th>
-      <th scope="col">Процент изменения</th>
+      <th scope="col">Ожидаемая цена</th>
+      <th scope="col">Скидка</th>
     </tr>
   </thead>
   <tbody>
@@ -39,7 +38,10 @@
       <td>{{product.beginning_price_rub |floatformat:"0" }} рублей</td>
       <td>{{product.beginning_price_btc}} btc</td>
       <td>{% multiply price_btc product.beginning_price_btc %}</td>
-      <td>{{product.price_change}} %</td>
+      <td>
+       {{product.requested_price}}
+      </td>
+      <th>{{product.discount_price}} rub</th>
       <td align="center">
         <button class="btn btn-success form-control" onClick="editProduct({{product.id}})" data-toggle="modal"
                 data-target="#myModal")>Изменить</button>

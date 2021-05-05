@@ -43,7 +43,9 @@ INSTALLED_APPS = [
     'shops.apps.ShopsConfig',
     'products.apps.ProductsConfig',
     'user.apps.UserConfig',
-    'tracker.apps.TrackerConfig'
+    'tracker.apps.TrackerConfig',
+    'django_celery_beat',
+    'django_celery_results',
 ]
 
 AUTH_USER_MODEL = 'user.CustomUser'
@@ -138,6 +140,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'cryptomap/static')
 ]
+
+
+# CELERY_BROKEN_URL = 'amqp://localhost'
+CELERY_RESULT_BACKEND = "django-db"
 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

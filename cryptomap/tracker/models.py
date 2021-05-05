@@ -4,21 +4,8 @@ from user.models import *
 
 
 class TrackedProduct(models.Model):
-    PRICE_CHANGE = (
-        (5, '5%'),
-        (10, '10%'),
-        (20, '20%'),
-        (30, '30%'),
-        (40, '40%'),
-        (50, '50%'),
-        (60, '60%'),
-        (70, '70%'),
-        (80, '80%'),
-        (90, '90%'),
-        (100, '100%'),
-    )
-
-    price_change = models.PositiveIntegerField(choices=PRICE_CHANGE, blank=False, default=5)
+    requested_price = models.IntegerField(null=True, blank=True)
+    discount_price = models.CharField(max_length=100)
     owner = models.ForeignKey('user.CustomUser', null=True, verbose_name='Владелец', on_delete=models.CASCADE)
     tracker = models.ForeignKey('UserTracker', verbose_name='UserTracker', on_delete=models.CASCADE, related_name='related_products')
     product = models.ForeignKey('products.Product', blank=False, on_delete=models.CASCADE)

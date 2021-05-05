@@ -5,6 +5,7 @@ from .bitcoin import get_btc_price
 from django.views.generic import DetailView, View
 from django.db.models import F
 from django.contrib import messages
+from .forms import *
 
 
 def view_tracker(request):
@@ -20,7 +21,7 @@ class AddToTrackerView(View):
         user = CustomUser.objects.get(username=request.user.username)
         tracker, created = UserTracker.objects.get_or_create(owner=user)
         product = Product.objects.get(pk=product_id)
-        tp, created = TrackedProduct.objects.get_or_create(owner=user, product=product, price_change=5, tracker=tracker, beginning_price_rub=product.price_rub, beginning_price_btc=product.price_btc)
+        tp, created = TrackedProduct.objects.get_or_create(owner=user, product=product, requested_price=5, tracker=tracker, beginning_price_rub=product.price_rub, beginning_price_btc=product.price_btc, discount_price='No Discount')
         if created:
             tracker.products.add(tp)
             tracker.total_products = F('total_products')+1
