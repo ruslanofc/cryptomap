@@ -1,0 +1,13 @@
+
+body {
+  margin: 0;
+}
+
+body, html, .map-container {
+  height: 500px;
+
+}
+
+#map-route {
+  height: 100%;
+}

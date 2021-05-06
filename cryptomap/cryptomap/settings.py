@@ -44,8 +44,10 @@ INSTALLED_APPS = [
     'products.apps.ProductsConfig',
     'user.apps.UserConfig',
     'tracker.apps.TrackerConfig',
+    'map.apps.MapConfig',
     'django_celery_beat',
     'django_celery_results',
+    'easy_maps',
 ]
 
 AUTH_USER_MODEL = 'user.CustomUser'
@@ -157,3 +159,6 @@ EMAIL_HOST_USER = 'cryptomap2021@gmail.com'
 EMAIL_HOST_PASSWORD = '3208Cryptomap'
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
+
+
+GOOGLE_API_KEY = "AIzaSyBzLbMI1u1IGuiZQax1pJIDTGHbqcyCATY"

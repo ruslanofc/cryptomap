@@ -24,4 +24,4 @@ def track_for_discount():
 
 while True:
     track_for_discount()
-    time.sleep(15)
+    time.sleep(15000000000)
