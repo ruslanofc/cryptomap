@@ -6,21 +6,24 @@ $.getScript( "https://maps.googleapis.com/maps/api/js?key=" + google_api_key + "
 function initMap() {
     var directionsDisplay = new google.maps.DirectionsRenderer;
     var map = new google.maps.Map(document.getElementById("map-route"), {
-      center: { lat: 51.513416, lng: -0.129761 },
+      center: { lat: 55.7887, lng: 49.1221 },
       zoom: 11,
     });
+
     directionsDisplay.setMap(map);
-    var marker = new google.maps.Marker({
-      position: { lat: 51.513416, lng: -0.129761 },
-      map: map,
-      title: "Hello World!",
-    });
 
-    var info = new google.maps.InfoWindow({
-      content: '<h3>Твое место</h3>'
-    });
+    for (i=0; i<markers.length; i++){
+        var marker = new google.maps.Marker({
+          position: { lat: markers[i][0], lng: markers[i][1] },
+          map: map,
+          content: markers[i][2]
+        });
 
-    marker.addListener("click", function() {
-      info.open(map, marker);
-    });
+        var infowindow = new google.maps.InfoWindow();
+
+        google.maps.event.addListener(marker, 'click', function(){
+            infowindow.setContent(this.content);
+            infowindow.open(map,this);
+        });
+    }
 }
