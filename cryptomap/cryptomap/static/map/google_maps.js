@@ -16,7 +16,7 @@ function initMap() {
         var marker = new google.maps.Marker({
           position: { lat: markers[i][0], lng: markers[i][1] },
           map: map,
-          content: markers[i][2]
+          content: '<a href="/shops/'+markers[i][2]+'/">'+ markers[i][3]+'</a>'
         });
 
         var infowindow = new google.maps.InfoWindow();
