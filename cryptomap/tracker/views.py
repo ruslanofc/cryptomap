@@ -5,6 +5,7 @@ from .bitcoin import get_btc_price
 from django.views.generic import DetailView, View
 from django.db.models import F
 from django.contrib import messages
+from .lstm import get_predict
 from .forms import *
 
 
@@ -15,6 +16,11 @@ def view_tracker(request):
 
     return render(request, 'tracker/view_tracker.html', {"tracker": tracker, "price_btc": price_btc})
 
+
+def prediction(request):
+    prediction = get_predict()
+
+    return render(request, 'tracker/prediction.html', {"prediction": prediction})
 
 class AddToTrackerView(View):
     def get(self, request, product_id, *args, **kwargs):
