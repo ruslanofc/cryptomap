@@ -1,8 +1,10 @@
 from django import forms
 from .models import *
+from user.models import CustomUser
 
 
 class ShopsForm(forms.Form):
+    owner = forms.ModelChoiceField(queryset=CustomUser.objects.all(), label='Владелец магазина', widget=forms.Select(attrs={'readonly': 'readonly'}))
     title = forms.CharField(max_length=150, label='Название магазина')
     city = forms.CharField(max_length=60, label='Город')
     address = forms.CharField(max_length=300, label='Адрес магазина')

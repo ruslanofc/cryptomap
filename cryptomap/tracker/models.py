@@ -17,6 +17,9 @@ class TrackedProduct(models.Model):
     def __str__(self):
         return "Продукт: {} (отслеживаемый)".format(self.product.title)
 
+    class Meta:
+        managed = True
+
 
 class UserTracker(models.Model):
     owner = models.ForeignKey('user.CustomUser', null=True, verbose_name='Владелец', on_delete=models.CASCADE)
@@ -33,3 +36,5 @@ class UserTracker(models.Model):
     def get_absolute_url(self):
         return reverse('view_tracker', kwargs={'tracker_id': self.pk})
 
+    class Meta:
+        managed = True

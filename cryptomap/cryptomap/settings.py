@@ -93,7 +93,7 @@ DATABASES = {
         # 'NAME': BASE_DIR / 'db.sqlite3',
         'ENGINE': 'django.db.backends.mysql',
         'CONN_MAX_AGE': 3600,
-        'NAME': 'cryptomap',
+        'NAME': 'cryptomapV3',
         'USER': 'root',
         'PASSWORD': 'root',
         'HOST': 'localhost',

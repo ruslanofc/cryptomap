@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Добавление товара - {{ block.super}}
+{% endblock %}
+
+{% block sidebar %}
+{% include 'inc/_sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+
+<h1>Добавление товара</h1>
+
+<form action="{% url 'add_product' shop_id=shop_id %}" method="post">
+
+    {% csrf_token %}
+
+    {{ productsForm.as_p }}
+
+    <button type="submit" class="btn btn-primary btn-block">Добавить товар</button>
+</form>
+
+{% endblock %}

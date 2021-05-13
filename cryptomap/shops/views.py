@@ -32,15 +32,24 @@ def view_shops(request, shops_id):
     return render(request, 'shops/view_shops.html', {"shops_item": shops_item, "products": products})
 
 
+def view_users_shops(request):
+    user = CustomUser.objects.get(username=request.user.username)
+    shops = Shop.objects.filter(owner=user)
+    context = {
+        'shops': shops,
+    }
+    return render(request, template_name='shops/view_users_shops.html', context=context)
+
+
 def add_shops(request):
+    user = CustomUser.objects.get(username=request.user.username)
     if request.method == 'POST':
         shopsForm = ShopsForm(request.POST)
         if shopsForm.is_valid():
             Shop.objects.create(**shopsForm.cleaned_data)
-
             return redirect(reverse('add_shops_descriptions'))
     else:
-        shopsForm = ShopsForm()
+        shopsForm = ShopsForm(initial={'owner': user})
     return render(request, 'shops/add_shops.html', {'shopsForm': shopsForm})
 
 

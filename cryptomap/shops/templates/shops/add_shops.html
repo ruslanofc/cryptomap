@@ -16,7 +16,60 @@
 
     {% csrf_token %}
 
+    {% comment %}
     {{ shopsForm.as_p }}
+    {% endcomment %}
+
+    <div class="form-group mb-3">
+        <label for="{{ shopsForm.owner.id_for_label }}">Владелец :</label>
+        {{shopsForm.owner}}
+        <div class="invalid-feddback">
+            {{shopsForm.owner.errors}}
+        </div>
+    </div>
+
+    <div class="form-group mb-3">
+        <label for="{{ shopsForm.title.id_for_label }}">Название :</label>
+        {{shopsForm.title}}
+        <div class="invalid-feddback">
+            {{shopsForm.title.errors}}
+        </div>
+    </div>
+    <div class="form-group mb-3">
+        <label for="{{ shopsForm.city.id_for_label }}">Город :</label>
+        {{shopsForm.city}}
+        <div class="invalid-feddback">
+            {{shopsForm.city.errors}}
+        </div>
+    </div>
+    <div class="form-group mb-3">
+        <label for="{{ shopsForm.address.id_for_label }}">Адрес :</label>
+        {{shopsForm.address}}
+        <div class="invalid-feddback">
+            {{shopsForm.address.errors}}
+        </div>
+    </div>
+    <div class="form-group mb-3">
+        <label for="{{ shopsForm.latitude.id_for_label }}">Широта :</label>
+        {{shopsForm.latitude}}
+        <div class="invalid-feddback">
+            {{shopsForm.latitude.errors}}
+        </div>
+    </div>
+    <div class="form-group mb-3">
+        <label for="{{ shopsForm.longitude.id_for_label }}">Долгота :</label>
+        {{shopsForm.longitude}}
+        <div class="invalid-feddback">
+            {{shopsForm.longitude.errors}}
+        </div>
+    </div>
+    <div class="form-group mb-3">
+        <label for="{{ shopsForm.is_published.id_for_label }}">Опубликовать :</label>
+        {{shopsForm.is_published}}
+        <div class="invalid-feddback">
+            {{shopsForm.is_published.errors}}
+        </div>
+    </div>
 
     <button type="submit" class="btn btn-primary btn-block">Добавить магазин</button>
 </form>

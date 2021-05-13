@@ -1,6 +1,6 @@
 from django.db import models
 from django.urls import reverse
-from user.models import *
+from user.models import CustomUser
 
 
 class Category(models.Model):
@@ -18,6 +18,7 @@ class Category(models.Model):
 
 
 class Shop(models.Model):
+    owner = models.ForeignKey(CustomUser, verbose_name='Владелец', on_delete=models.CASCADE)
     title = models.CharField(max_length=150)
     city = models.CharField(max_length=60, default="Kazan")
     address = models.CharField(max_length=300)

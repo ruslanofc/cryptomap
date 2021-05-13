@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  {{ shops_item.shop.title }} - {{ block.super}}
+{% endblock %}
+
+{% block sidebar %}
+{% include 'inc/_sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+
+{% for item in shops %}
+<div class="card mt-3 mb-3">
+  <div class="card-header">
+    Название: <p>{{item.title}}</p>
+  </div>
+  <div class="card-body">
+    <div class="media">
+      {% if item.photo %}
+      <img src="{{ item.photo.url}}" width="350" class="mr-3" alt="">
+      {% else %}
+      <img src="https://picsum.photos/id/1060/200/300/?blur" alt="">
+      {% endif %}
+      <div class="media-body">
+        <p class="card-text">{{item.address}}</p>
+        <a href="{% url 'add_product' item.pk %}" class="btn btn-primary">Добавить товары</a>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer text-muted">
+    {{item.created_at }}
+  </div>
+</div>
+
+{% endfor %}
+
+{% endblock %}

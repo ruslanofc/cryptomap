@@ -20,8 +20,6 @@ def track_for_discount():
             tracker.save()
 
 
-
-
 while True:
     track_for_discount()
     time.sleep(15000000000)
