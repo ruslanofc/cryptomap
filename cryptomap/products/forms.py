@@ -16,6 +16,7 @@ class ProductsDescriptionsForm(forms.Form):
     product = forms.ModelChoiceField(queryset=Product.objects.all(), widget=forms.Select(attrs={'readonly': 'readonly'}))
     description = forms.CharField(label='Описание товара', required=False)
     category = forms.ModelChoiceField(queryset=ProductCategory.objects.all(), label='Категория товара', empty_label='Выберите категорию')
+    photo = forms.ImageField()
 
 
 

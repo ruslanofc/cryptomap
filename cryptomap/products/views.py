@@ -42,7 +42,20 @@ def add_product(request, shop_id):
         productsForm = ProductsForm(request.POST)
         if productsForm.is_valid():
             Product.objects.create(**productsForm.cleaned_data)
-            return redirect(reverse('add_shops_descriptions'))
+            return redirect(reverse('add_product_description'))
     else:
         productsForm = ProductsForm(initial={'shop': shop})
     return render(request, 'products/add_product.html', {'productsForm': productsForm, 'shop_id': shop_id})
+
+
+def add_product_description(request):
+    instance = Product.objects.last()
+    if request.method == 'POST':
+        productsDescriptionsForm = ProductsDescriptionsForm(request.POST, request.FILES)
+        if productsDescriptionsForm.is_valid():
+            ProductDescription.objects.create(**productsDescriptionsForm.cleaned_data)
+
+            return redirect('home')
+    else:
+        productsDescriptionsForm = ProductsDescriptionsForm(initial={'product': instance.id})
+        return render(request, 'products/add_product_description.html', {'productsDescriptionsForm': productsDescriptionsForm})
