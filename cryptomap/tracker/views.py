@@ -17,10 +17,20 @@ def view_tracker(request):
     return render(request, 'tracker/view_tracker.html', {"tracker": tracker, "price_btc": price_btc})
 
 
-def prediction(request):
-    prediction = get_predict()
+def prediction(request, coin):
+    prediction, image = get_predict(coin)
+    print(type(prediction))
 
-    return render(request, 'tracker/prediction.html', {"prediction": prediction})
+    return render(request, 'tracker/prediction.html', {"prediction": prediction, "image": image, "coin": coin})
+
+
+def add_coin_to_predict(request):
+    if request.method == 'POST':
+        coin = request.POST['coin']
+        return redirect('prediction', coin=coin)
+    else:
+        return render(request, 'tracker/add_coin_to_predict.html')
+
 
 class AddToTrackerView(View):
     def get(self, request, product_id, *args, **kwargs):

@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    {{prediction}}
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}
+  Prediction - {{ block.super}}
+{% endblock %}
+
+{% block sidebar %}
+{% include 'inc/_sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+
+<h1>{{coin}} price prediction is {{prediction}} tomorrow</h1>
+
+<div class="media">
+    <img src="data:image/png;base64, {{ image }}" width="1000" height="700" alt="somealt" />
+</div>
+{% endblock content%}
+

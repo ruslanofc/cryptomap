@@ -10,10 +10,12 @@ from sklearn.preprocessing import MinMaxScaler
 from tensorflow.keras.layers import Dense, Dropout, LSTM
 from tensorflow.keras.models import Sequential
 import math
+from io import BytesIO
+import base64
 
 
-def get_predict():
-    crypto_currency = 'BTC'
+def get_predict(curr):
+    crypto_currency = curr
     against_currency = 'USD'
 
     start = dt.datetime(2016, 1, 1)
@@ -75,18 +77,21 @@ def get_predict():
     predictions = scaler.inverse_transform(predictions)
     print(r2_score(y_test, predictions))
 
-    # train = data[:training_data_len]
-    # valid = data[training_data_len:]
-    # valid['Tahminler']= predictions
+    train = data[:training_data_len]
+    valid = data[training_data_len:]
+    valid['prediction'] = predictions
 
-    # plt.figure(figsize=(16,8))
-    # plt.title('model')
-    # plt.xlabel('Date', fontsize=18)
-    # plt.ylabel('Close', fontsize=18)
-    # plt.plot(data['Close'],color="purple")
-    # plt.plot(valid[['Close','Tahminler']])
-    # plt.legend(['Eğitim','Değer','Tahminler'],loc='lower right')
-    # plt.show()
+    plt.figure(figsize=(16, 8))
+    plt.title('model')
+    plt.xlabel('Date', fontsize=18)
+    plt.ylabel('Close', fontsize=18)
+    plt.plot(data['Close'], color="purple")
+    plt.plot(valid[['Close', 'prediction']])
+    plt.legend(['Data', 'Value', 'prediction'], loc='lower right')
+    buf = BytesIO()
+    plt.savefig(buf, format='png')
+    image_base64 = base64.b64encode(buf.getvalue()).decode('utf-8').replace('\n', '')
+    buf.close()
 
     dataset = data.values
     training_data_len = math.ceil(len(dataset) * .8)
@@ -110,5 +115,6 @@ def get_predict():
     prediction = scaler.inverse_transform(prediction)
 
     print(f"prediction for next day :{prediction}")
+    prediction = prediction.item(0)
 
-    return prediction
+    return prediction, image_base64
