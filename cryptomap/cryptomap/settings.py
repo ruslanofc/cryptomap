@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django_celery_beat',
     'django_celery_results',
     'easy_maps',
+    'rest_framework',
 ]
 
 AUTH_USER_MODEL = 'user.CustomUser'
