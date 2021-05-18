@@ -1,14 +1,19 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .forms import *
+from django.core.paginator import Paginator
 from .models import *
 from products.models import *
 
 
 def index(request):
     shopsDescriptions = ShopDescription.objects.all()
+    paginator = Paginator(shopsDescriptions, 1)
+    page_num = request.GET.get('page',1)
+    page_objects = paginator.get_page(page_num)
     context = {
-        'shopsDescriptions': shopsDescriptions,
+        # 'shopsDescriptions': shopsDescriptions,
+        'page_obj': page_objects,
         'title': 'Список магазинов',
     }
     return render(request, template_name='shops/index.html', context=context)
