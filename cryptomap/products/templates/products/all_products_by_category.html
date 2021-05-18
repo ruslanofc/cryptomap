@@ -10,7 +10,7 @@
 
 {% block content %}
 
-{% for product_description in productsDescriptions %}
+{% for product_description in page_obj.object_list %}
 <div class="card mb-3 mt-3" style="max-width: 740px;">
   <div class="row g-0">
     <div class="col-md-4">

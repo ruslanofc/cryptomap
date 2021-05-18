@@ -10,7 +10,7 @@
 
 {% block content %}
 
-{% for item in shopsDescriptions %}
+{% for item in page_obj.object_list %}
 <div class="card mt-3 mb-3">
   <div class="card-header">
     Категория: <a href="{% url 'shops_by_category' item.category.pk %}">{{item.category}}</a>

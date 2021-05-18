@@ -21,9 +21,13 @@ def index(request):
 
 def get_category(request, category_id):
     shopsDescriptions = ShopDescription.objects.filter(category_id=category_id)
+    paginator = Paginator(shopsDescriptions, 1)
+    page_num = request.GET.get('page', 1)
+    page_objects = paginator.get_page(page_num)
     category = Category.objects.get(pk=category_id)
     context = {
-        'shopsDescriptions': shopsDescriptions,
+        # 'shopsDescriptions': shopsDescriptions,
+        'page_obj': page_objects,
         'category': category
     }
 
@@ -32,7 +36,6 @@ def get_category(request, category_id):
 
 def view_shops(request, shops_id):
     shops_item = ShopDescription.objects.get(shop_id=shops_id)
-
     products = Product.objects.filter(shop=shops_id)
     return render(request, 'shops/view_shops.html', {"shops_item": shops_item, "products": products})
 

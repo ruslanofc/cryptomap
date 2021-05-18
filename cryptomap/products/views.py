@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .forms import *
 from .models import *
+from django.core.paginator import Paginator
 
 
 def view_product(request, product_id):
@@ -27,8 +28,13 @@ def get_products_by_category(request, category_id):
 
     # контекст для кнопки перехода в магазин
     shopsDescriptions = ShopDescription.objects.all()
+
+    paginator = Paginator(productsDescriptions, 2)
+    page_num = request.GET.get('page', 1)
+    page_objects = paginator.get_page(page_num)
     context = {
-        'productsDescriptions': productsDescriptions,
+        # 'productsDescriptions': productsDescriptions,
+        'page_obj': page_objects,
         'category': category,
         'shopsDescriptions': shopsDescriptions
     }
