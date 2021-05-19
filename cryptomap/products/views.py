@@ -1,16 +1,20 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from .forms import *
 from .models import *
-from django.core.paginator import Paginator
-from django.views.generic.list import ListView
+from django.views.generic import ListView, DetailView
 
 
-def view_product(request, product_id):
-    products = Product.objects.get(pk=product_id)
-    products_descriptions = ProductDescription.objects.get(product_id=product_id)
+class ProductDetailView(DetailView):
 
-    return render(request, 'products/view_product.html', {"products": products, "products_descriptions": products_descriptions})
+    model = Product
+    pk_url_kwarg = 'product_id'
+    template_name = 'products/view_product.html'
+    context_object_name = 'products'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['products_descriptions'] = ProductDescription.objects.get(product_id=self.kwargs['product_id'])
+        return context
 
 
 class ProductsView(ListView):
@@ -21,10 +25,12 @@ class ProductsView(ListView):
 
 
 class ProductsByCategory(ListView):
+
     model = ProductDescription
     template_name = 'products/all_products_by_category.html'
     context_object_name = 'products'
     paginate_by = 2
+    allow_empty = False
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -34,29 +40,6 @@ class ProductsByCategory(ListView):
 
     def get_queryset(self):
         return ProductDescription.objects.filter(category_id=self.kwargs['category_id'])
-
-
-# def get_products_by_category(request, category_id):
-#     # для вывода информации о продукте
-#     productsDescriptions = ProductDescription.objects.filter(category_id=category_id)
-#
-#     # для вывода тайтла
-#     category = ProductCategory.objects.get(pk=category_id)
-#
-#     # контекст для кнопки перехода в магазин
-#     shopsDescriptions = ShopDescription.objects.all()
-#
-#     paginator = Paginator(productsDescriptions, 2)
-#     page_num = request.GET.get('page', 1)
-#     page_objects = paginator.get_page(page_num)
-#     context = {
-#         # 'productsDescriptions': productsDescriptions,
-#         'page_obj': page_objects,
-#         'category': category,
-#         'shopsDescriptions': shopsDescriptions
-#     }
-#
-#     return render(request, template_name='products/all_products_by_category.html', context=context)
 
 
 def add_product(request, shop_id):
