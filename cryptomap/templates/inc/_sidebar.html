@@ -1,7 +1,23 @@
 {% load shops_tags%}
+
+
+
 <div class="list-group mt-3">
+
+  <div class="search-bar ">
+    <h4>Поиск магазина</h4>
+    <form action="{% url 'search' %}" method="get" class="form-inline my-2 my-lg-0 d-flex flex-row justify-content-between">
+      <input class="form-control mr-sm-2" type="search" placeholder="Введите название..." name="q">
+
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+          <span>Search</span>
+        </button>
+
+    </form>
+  </div>
+  <h4 class="mt-3">Категории магазинов</h4>
   {% get_categories as categories%}
   {% for category in categories %}
-  <a href="{{ category.get_absolute_url }}" class="list-group-item list-group-item-action">{{category.title}}</a>
+  <a href="{{ category.get_absolute_url }}" class="list-group-item list-group-item-action mt-1">{{category.title}}</a>
   {% endfor %}
 </div>

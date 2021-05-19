@@ -4,6 +4,14 @@ from .forms import *
 from django.core.paginator import Paginator
 from .models import *
 from products.models import *
+from django.views.generic.list import ListView
+
+
+def search(request):
+    shop = Shop.objects.get(title__icontains=request.GET.get('q'))
+    shops_item = ShopDescription.objects.get(shop_id=shop.id)
+    products = Product.objects.filter(shop=shop.id)
+    return render(request, 'shops/view_shops.html', {"shops_item": shops_item, "products": products})
 
 
 def index(request):
