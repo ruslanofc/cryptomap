@@ -5,12 +5,12 @@
 {% endblock %}
 
 {% block title %}
-  {{ category.title }}
+  Все товары
 {% endblock %}
 
 {% block content %}
 
-{% for product_description in products %}
+{% for product_description in object_list %}
 <div class="card mb-3 mt-3" style="max-width: 740px;">
   <div class="row g-0">
     <div class="col-md-4">
@@ -22,7 +22,7 @@
     </div>
     <div class="col-ml-8 ">
       <div class="card-body mr-1 ml-5">
-        <h5 class="card-title">{{product_description.product.title}}</h5>
+        <h5 class="card-title">{{product_description.title}}</h5>
 <!--        вывод кнопки магазина и переход на нее-->
         {% for shop_description in shopsDescriptions%}
             {% if product_description.product.shop.title == shop_description.shop.title%}
@@ -31,10 +31,10 @@
         {% endfor %}
 
         <p class="card-text">{{product_description.description}}</p>
-        <p class="card-text">{{product_description.product.price_rub|floatformat:"0" }} рублей</p>
-        <p class="card-text">{{product_description.product.price_btc}} btc</p>
-        <a href="{{ product_description.product.get_absolute_url }}" class="btn btn-primary">Поподробнее</a>
-        <p class="card-text"><small class="text-muted">Размещен: {{product_description.product.created_at }}</small></p>
+        <p class="card-text">{{product_description.price_rub|floatformat:"0" }} рублей</p>
+        <p class="card-text">{{product_description.price_btc}} btc</p>
+        <a href="{{ product_description.get_absolute_url }}" class="btn btn-primary">Поподробнее</a>
+        <p class="card-text"><small class="text-muted">Размещен: {{product_description.created_at }}</small></p>
       </div>
     </div>
   </div>
