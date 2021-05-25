@@ -4,6 +4,15 @@ from .models import *
 from django.views.generic import ListView, DetailView
 
 
+class PriceCity:
+
+    def get_price_btc(self):
+        return Shop.objects.all()
+
+    def get_price_rub(self):
+        return Shop.objects.all()
+
+
 class ProductDetailView(DetailView):
 
     model = Product
@@ -17,7 +26,7 @@ class ProductDetailView(DetailView):
         return context
 
 
-class ProductsView(ListView):
+class ProductsView(ListView, PriceCity):
 
     model = Product
     queryset = Product.objects.all()

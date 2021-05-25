@@ -4,48 +4,51 @@ from .forms import *
 from django.core.paginator import Paginator
 from .models import *
 from products.models import *
-from django.views.generic.list import ListView
+from django.views.generic import ListView, DetailView
 
 
 def search(request):
+
     shop = Shop.objects.get(title__icontains=request.GET.get('q'))
-    shops_item = ShopDescription.objects.get(shop_id=shop.id)
+    shop_item = ShopDescription.objects.get(shop_id=shop.id)
     products = Product.objects.filter(shop=shop.id)
-    return render(request, 'shops/view_shops.html', {"shops_item": shops_item, "products": products})
+    return render(request, 'shops/view_shops.html', {"shop": shop_item, "products": products})
 
 
-def index(request):
-    shopsDescriptions = ShopDescription.objects.all()
-    paginator = Paginator(shopsDescriptions, 1)
-    page_num = request.GET.get('page',1)
-    page_objects = paginator.get_page(page_num)
-    context = {
-        # 'shopsDescriptions': shopsDescriptions,
-        'page_obj': page_objects,
-        'title': 'Список магазинов',
-    }
-    return render(request, template_name='shops/index.html', context=context)
+class AllShopsView(ListView):
+
+    model = ShopDescription
+    queryset = ShopDescription.objects.all()
+    paginate_by = 1
+    context_object_name = 'shopsDescriptions'
+    template_name = 'shops/index.html'
 
 
-def get_category(request, category_id):
-    shopsDescriptions = ShopDescription.objects.filter(category_id=category_id)
-    paginator = Paginator(shopsDescriptions, 1)
-    page_num = request.GET.get('page', 1)
-    page_objects = paginator.get_page(page_num)
-    category = Category.objects.get(pk=category_id)
-    context = {
-        # 'shopsDescriptions': shopsDescriptions,
-        'page_obj': page_objects,
-        'category': category
-    }
+class ShopByCategory(DetailView):
 
-    return render(request, template_name='shops/category.html', context=context)
+    model = ShopDescription
+    pk_url_kwarg = 'category_id'
+    paginate_by = 1
+    template_name = 'shops/category.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category'] = Category.objects.get(pk=self.kwargs['category_id'])
+        context['shopsDescriptions'] = ShopDescription.objects.filter(category_id=self.kwargs['category_id'])
+        return context
 
 
-def view_shops(request, shops_id):
-    shops_item = ShopDescription.objects.get(shop_id=shops_id)
-    products = Product.objects.filter(shop=shops_id)
-    return render(request, 'shops/view_shops.html', {"shops_item": shops_item, "products": products})
+class ViewShop(DetailView):
+
+    model = ShopDescription
+    pk_url_kwarg = 'shops_id'
+    template_name = 'shops/view_shops.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['shop'] = ShopDescription.objects.get(shop_id=self.kwargs['shops_id'])
+        context['products'] = Product.objects.filter(shop=self.kwargs['shops_id'])
+        return context
 
 
 def view_users_shops(request):
