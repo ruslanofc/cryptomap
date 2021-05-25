@@ -6,6 +6,22 @@
 
 {% block sidebar %}
 {% include 'inc/_sidebar.html' %}
+
+<form action="{% url 'filter' %}" method="get">
+  <div class="left-side mt-3">
+    <h4 class="sear-head editContent">Города</h4>
+    <ul class="w3layouts-box-list">
+      {% for city in view.get_city %}
+      <li class="editContent">
+        <input type="checkbox" class="checked" name="city" value="{{ city }}">
+        <span class="span editContent">{{ city }}</span>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <button type="submit" class="btn btn-primary">Найти</button>
+</form>
+
 {% endblock %}
 
 {% block content %}

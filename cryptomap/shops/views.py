@@ -7,6 +7,25 @@ from products.models import *
 from django.views.generic import ListView, DetailView
 
 
+class CityFilter:
+    def get_city(self):
+        years_sorted_list = sorted(set(Shop.objects.all().values_list('city', flat=True)))
+        return years_sorted_list
+
+
+class FilterCityShopView(ListView, CityFilter):
+
+    model = ShopDescription
+    template_name = "shops/index.html"
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['shopsDescriptions'] = Shop.objects.filter(city__in=self.request.GET.getlist('city'))
+
+        return context
+
+
 def search(request):
 
     shop = Shop.objects.get(title__icontains=request.GET.get('q'))
@@ -15,11 +34,11 @@ def search(request):
     return render(request, 'shops/view_shops.html', {"shop": shop_item, "products": products})
 
 
-class AllShopsView(ListView):
+class AllShopsView(ListView, CityFilter):
 
     model = ShopDescription
     queryset = ShopDescription.objects.all()
-    paginate_by = 1
+    paginate_by = 3
     context_object_name = 'shopsDescriptions'
     template_name = 'shops/index.html'
 
