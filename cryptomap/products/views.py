@@ -4,13 +4,31 @@ from .models import *
 from django.views.generic import ListView, DetailView
 
 
-class PriceCity:
+class ShopCategories:
 
-    def get_price_btc(self):
-        return Shop.objects.all()
+    def get_shop(self):
+        years_sorted_list = sorted(set(Shop.objects.all().values_list('title', flat=True)))
+        return years_sorted_list
 
-    def get_price_rub(self):
-        return Shop.objects.all()
+    def get_categories(self):
+        category_sorted_list = sorted(set(ProductCategory.objects.all().values_list('title', flat=True)))
+        return category_sorted_list
+
+
+class FilterShopCategoryView(ListView, ShopCategories):
+    model = Product
+    template_name = "products/product_list.html"
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['Product'] = Product.objects.all()
+        if "shop" in self.request.GET:
+            context['Product'] = context['Product'].filter(
+                shop_id__in=Shop.objects.values_list('id', flat=True).filter(title__in=self.request.GET.getlist('shop')))
+
+        if "category" in self.request.GET:
+            context['Product'] = context['Product'].filter(id__in=ProductDescription.objects.values_list('product_id',flat=True).filter(category_id__in=ProductCategory.objects.values_list('id', flat=True).filter(title__in=self.request.GET.getlist('category'))))
+        return context
 
 
 class ProductDetailView(DetailView):
@@ -26,11 +44,13 @@ class ProductDetailView(DetailView):
         return context
 
 
-class ProductsView(ListView, PriceCity):
+class ProductsView(ListView, ShopCategories):
 
     model = Product
     queryset = Product.objects.all()
     paginate_by = 2
+    context_object_name = 'Product'
+
 
 
 class ProductsByCategory(ListView):

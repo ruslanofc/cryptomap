@@ -29,8 +29,11 @@ class FilterCityShopView(ListView, CityFilter):
         context['shopsDescriptions'] = ShopDescription.objects.all()
         if "city" in self.request.GET:
             context['shopsDescriptions'] = context['shopsDescriptions'].filter(shop_id__in=Shop.objects.values_list('id', flat=True).filter(city__in=self.request.GET.getlist('city')))
+
         if "category" in self.request.GET:
-            context['shopsDescriptions'] = context['shopsDescriptions'].filter(category_id__in=Category.objects.values_list('id', flat=True).filter(title__in=self.request.GET.getlist('category')))
+            context['shopsDescriptions'] = context['shopsDescriptions'].filter(
+                category_id__in=Category.objects.values_list('id', flat=True).filter(
+                    title__in=self.request.GET.getlist('category')))
 
         return context
 
