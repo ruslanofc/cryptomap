@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .forms import *
@@ -8,9 +9,14 @@ from django.views.generic import ListView, DetailView
 
 
 class CityFilter:
+
     def get_city(self):
         years_sorted_list = sorted(set(Shop.objects.all().values_list('city', flat=True)))
         return years_sorted_list
+
+    def get_categories(self):
+        category_sorted_list = sorted(set(Category.objects.all().values_list('title', flat=True)))
+        return category_sorted_list
 
 
 class FilterCityShopView(ListView, CityFilter):
@@ -20,8 +26,11 @@ class FilterCityShopView(ListView, CityFilter):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        a = Shop.objects.values_list('id', flat=True).filter(city__in=self.request.GET.getlist('city'))
-        context['shopsDescriptions'] = ShopDescription.objects.filter(shop_id__in=a)
+        context['shopsDescriptions'] = ShopDescription.objects.all()
+        if "city" in self.request.GET:
+            context['shopsDescriptions'] = context['shopsDescriptions'].filter(shop_id__in=Shop.objects.values_list('id', flat=True).filter(city__in=self.request.GET.getlist('city')))
+        if "category" in self.request.GET:
+            context['shopsDescriptions'] = context['shopsDescriptions'].filter(category_id__in=Category.objects.values_list('id', flat=True).filter(title__in=self.request.GET.getlist('category')))
 
         return context
 
@@ -38,7 +47,7 @@ class AllShopsView(ListView, CityFilter):
 
     model = ShopDescription
     queryset = ShopDescription.objects.all()
-    paginate_by = 3
+    paginate_by = 4
     context_object_name = 'shopsDescriptions'
     template_name = 'shops/index.html'
 
