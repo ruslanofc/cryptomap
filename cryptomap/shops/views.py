@@ -20,8 +20,8 @@ class FilterCityShopView(ListView, CityFilter):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        context['shopsDescriptions'] = Shop.objects.filter(city__in=self.request.GET.getlist('city'))
+        a = Shop.objects.values_list('id', flat=True).filter(city__in=self.request.GET.getlist('city'))
+        context['shopsDescriptions'] = ShopDescription.objects.filter(shop_id__in=a)
 
         return context
 
