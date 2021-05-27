@@ -2,6 +2,34 @@
 
 {% block sidebar %}
 {% include 'inc/_sidebar.html' %}
+
+<form action="{% url 'shopFilter' %}" method="get">
+  <div class="left-side mt-3">
+    <h4 class="sear-head editContent">Категории</h4>
+    <ul class="w3layouts-box-list">
+      {% for category in view.get_categories %}
+      <li class="editContent">
+        <input type="checkbox" class="checked" name="category" value="{{ category }}">
+        <span class="span editContent">{{ category }}</span>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="left-side mt-3">
+    <h4 class="sear-head editContent">Магазины</h4>
+    <ul class="w3layouts-box-list">
+      {% for shop in view.get_shop %}
+      <li class="editContent">
+        <input type="checkbox" class="checked" name="shop" value="{{ shop }}">
+        <span class="span editContent">{{ shop }}</span>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <button type="submit" class="btn btn-primary">Найти</button>
+</form>
+
 {% endblock %}
 
 {% block title %}

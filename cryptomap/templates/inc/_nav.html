@@ -15,7 +15,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
-                <li class="nav-item"><a class="nav-link text-dark" href="{% url 'home' %}">Главная</a></li>
+                <li class="nav-item"><a class="nav-link text-dark" href="{% url 'home' %}">Магазины</a></li>
                 <li class="nav-item"><a class="nav-link text-dark" href="{% url 'map' %}">Карта</a></li>
 
                 <li class="nav-item dropdown">
@@ -30,30 +30,7 @@
                         <li><a class="dropdown-item" href="{% url 'add_coin_to_predict' %}">Some coin</a></li>
                     </ul>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-dark" href="{% url 'home' %}" id="navbarDropdownMenuLink" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                        Категории магазинов
-                    </a>
-                    <ul class="dropdown-menu text-dark" aria-labelledby="navbarDropdownMenuLink">
-                        {% for category in categories %}
-                        <li><a class="dropdown-item" href="{{ category.get_absolute_url }}">{{category.title}}</a></li>
-                        {% endfor %}
-                    </ul>
-                </li>
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-dark" href="{% url 'home' %}" id="navbarDropdownMenuLink2" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                        Категории товаров
-                    </a>
-                    <ul class="dropdown-menu text-dark" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item" href="{% url 'all_products' %}">Все товары</a></li>
-                        {% for product_category in products_categories %}
-                        <li><a class="dropdown-item" href="{{ product_category.get_absolute_url }}">{{product_category.title}}</a></li>
-                        {% endfor %}
-                    </ul>
-                </li>
+                <li class="nav-item"><a class="nav-link text-dark" href="{% url 'all_products' %}">Все товары</a></li>
                 {% if request.user.is_authenticated %}
                     <li class="nav-item"><a class="nav-link text-dark" href="{% url 'add_shops' %}">Добавить магазин</a></li>
                 {% endif %}

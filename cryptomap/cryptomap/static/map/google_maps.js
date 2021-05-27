@@ -16,13 +16,13 @@ function initMap() {
         var marker = new google.maps.Marker({
           position: { lat: markers[i][0], lng: markers[i][1] },
           map: map,
-          content: '<a href="/shop/'+markers[i][2]+'/">'+ markers[i][3]+'</a>'
+          content: '<a href="/shops/'+markers[i][2]+'/">'+ markers[i][3]+'</a>'
         });
 
         var infowindow = new google.maps.InfoWindow();
 
         google.maps.event.addListener(marker, 'click', function(){
-            infowindow.setContent(this.content;
+            infowindow.setContent(this.content);
             infowindow.open(map,this);
         });
     }

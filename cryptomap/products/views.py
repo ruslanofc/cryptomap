@@ -16,18 +16,20 @@ class ShopCategories:
 
 
 class FilterShopCategoryView(ListView, ShopCategories):
-    model = Product
-    template_name = "products/product_list.html"
+    model = ProductDescription
+    template_name = 'products/all_products_by_category.html'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['Product'] = Product.objects.all()
+        context['products'] = ProductDescription.objects.all()
         if "shop" in self.request.GET:
-            context['Product'] = context['Product'].filter(
-                shop_id__in=Shop.objects.values_list('id', flat=True).filter(title__in=self.request.GET.getlist('shop')))
+            context['products'] = context['products'].filter(product_id__in=Product.objects.values_list('id', flat=True).filter(
+                shop_id__in=Shop.objects.values_list('id', flat=True).filter(title__in=self.request.GET.getlist('shop'))))
 
         if "category" in self.request.GET:
-            context['Product'] = context['Product'].filter(id__in=ProductDescription.objects.values_list('product_id',flat=True).filter(category_id__in=ProductCategory.objects.values_list('id', flat=True).filter(title__in=self.request.GET.getlist('category'))))
+            context['products'] = context['products'].filter(category_id__in=ProductCategory.objects.values_list('id', flat=True).filter(title__in=self.request.GET.getlist('category')))
+
+        context['shopsDescriptions'] = ShopDescription.objects.all()
         return context
 
 
@@ -46,29 +48,15 @@ class ProductDetailView(DetailView):
 
 class ProductsView(ListView, ShopCategories):
 
-    model = Product
-    queryset = Product.objects.all()
     paginate_by = 2
-    context_object_name = 'Product'
-
-
-
-class ProductsByCategory(ListView):
-
     model = ProductDescription
     template_name = 'products/all_products_by_category.html'
     context_object_name = 'products'
-    paginate_by = 2
-    allow_empty = False
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['category'] = ProductDescription.objects.filter(pk=self.kwargs['category_id'])
         context['shopsDescriptions'] = ShopDescription.objects.all()
         return context
-
-    def get_queryset(self):
-        return ProductDescription.objects.filter(category_id=self.kwargs['category_id'])
 
 
 def add_product(request, shop_id):
