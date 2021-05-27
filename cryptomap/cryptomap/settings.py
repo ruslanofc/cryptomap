@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django_celery_results',
     'easy_maps',
     'rest_framework',
+    'fontawesome-free',
 ]
 
 REST_FRAMEWORK = {
