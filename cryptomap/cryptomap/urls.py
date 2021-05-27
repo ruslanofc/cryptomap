@@ -26,6 +26,7 @@ urlpatterns = [
     path('', include('tracker.urls')),
     path('', include('map.urls')),
     path('api/', include('shops.api.urls')),
+    path('api/', include('products.api.urls')),
 ]
 
 if settings.DEBUG:

@@ -30,3 +30,19 @@ class ShopSerializer(serializers.ModelSerializer):
         model = Shop
         fields = '__all__'
 
+
+class ShopDescriptionSerializer(serializers.ModelSerializer):
+    shop = serializers.PrimaryKeyRelatedField(queryset=Shop.objects)
+    description = serializers.CharField(required=True)
+    category = serializers.PrimaryKeyRelatedField(queryset=Category.objects)
+    photo = serializers.ImageField(required=True)
+    email = serializers.EmailField(required=True)
+    url = serializers.URLField(required=True)
+    telegram_url = serializers.URLField(required=True)
+    pay_in_rub = serializers.BooleanField(required=True)
+    pay_in_btc = serializers.BooleanField(required=True)
+
+    class Meta:
+        model = ShopDescription
+        fields = '__all__'
+
