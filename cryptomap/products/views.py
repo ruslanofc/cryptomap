@@ -17,7 +17,7 @@ class ShopCategories:
 
 class FilterShopCategoryView(ListView, ShopCategories):
     model = ProductDescription
-    template_name = 'products/all_products_by_category.html'
+    template_name = 'products/all_products.html'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -31,6 +31,14 @@ class FilterShopCategoryView(ListView, ShopCategories):
 
         context['shopsDescriptions'] = ShopDescription.objects.all()
         return context
+
+
+def searchProduct(request):
+
+    products = Product.objects.get(title__icontains=request.GET.get('q'))
+    products_descriptions = ProductDescription.objects.get(product_id=products.id)
+
+    return render(request, 'products/view_product.html', {"products_descriptions": products_descriptions, "products": products})
 
 
 class ProductDetailView(DetailView):
@@ -50,7 +58,7 @@ class ProductsView(ListView, ShopCategories):
 
     paginate_by = 2
     model = ProductDescription
-    template_name = 'products/all_products_by_category.html'
+    template_name = 'products/all_products.html'
     context_object_name = 'products'
 
     def get_context_data(self, *, object_list=None, **kwargs):

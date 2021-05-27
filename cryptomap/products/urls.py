@@ -8,4 +8,5 @@ urlpatterns = [
     path('shopFilter/', FilterShopCategoryView.as_view(), name='shopFilter'),
     path('products/add_product/<int:shop_id>/', add_product, name='add_product'),
     path('products/add_product_description/', add_product_description, name='add_product_description'),
+    path('products/search/', searchProduct, name='searchProduct'),
 ]

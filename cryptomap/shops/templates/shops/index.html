@@ -7,6 +7,19 @@
 {% block sidebar %}
 {% include 'inc/_sidebar.html' %}
 
+<div class="search-bar ">
+  <h4>Поиск магазина</h4>
+  <form action="{% url 'search' %}" method="get"
+        class="form-inline my-2 my-lg-0 d-flex flex-row justify-content-between">
+    <input class="form-control mr-sm-2" type="search" placeholder="Введите название..." name="q">
+
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+      <span>Search</span>
+    </button>
+
+  </form>
+</div>
+
 <form action="{% url 'filter' %}" method="get">
   <div class="left-side mt-3">
     <h4 class="sear-head editContent">Категории</h4>
