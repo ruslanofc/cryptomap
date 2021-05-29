@@ -6,58 +6,41 @@
 
 {% load tracker_tags %}
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'home' %}">Crypto map</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
-                <li class="nav-item"><a class="nav-link text-dark" href="{% url 'home' %}">Магазины</a></li>
-                <li class="nav-item"><a class="nav-link text-dark" href="{% url 'map' %}">Карта</a></li>
+                <li class="nav-item"><a class="nav-link text-light" href="{% url 'home' %}">Crypto map</a></li>
+                <li class="nav-item"><a class="nav-link text-light" href="{% url 'home' %}">Магазины</a></li>
+                <li class="nav-item"><a class="nav-link text-light" href="{% url 'map' %}">Карта</a></li>
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-dark" href="{% url 'home' %}" id="navbarDropdownMenuLink" role="button"
+                    <a class="nav-link dropdown-toggle text-light" href="{% url 'home' %}" id="navbarDropdownMenuLink" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
                         Прогноз
                     </a>
-                    <ul class="dropdown-menu text-dark" aria-labelledby="navbarDropdownMenuLink">
+                    <ul class="dropdown-menu text-light" aria-labelledby="navbarDropdownMenuLink">
                         <li><a class="dropdown-item" href="{% url 'prediction' coin='BTC' %}">Bitcoin</a></li>
                         <li><a class="dropdown-item" href="{% url 'prediction' coin='LTC' %}">Litecoin</a></li>
                         <li><a class="dropdown-item" href="{% url 'prediction' coin='DOGE' %}">Dogecoin</a></li>
                         <li><a class="dropdown-item" href="{% url 'add_coin_to_predict' %}">Some coin</a></li>
                     </ul>
                 </li>
-                <li class="nav-item"><a class="nav-link text-dark" href="{% url 'all_products' %}">Все товары</a></li>
+                <li class="nav-item"><a class="nav-link text-light" href="{% url 'all_products' %}">Все товары</a></li>
                 {% if request.user.is_authenticated %}
-                    <li class="nav-item"><a class="nav-link text-dark" href="{% url 'add_shops' %}">Добавить магазин</a></li>
+                    <li class="nav-item"><a class="nav-link text-light" href="{% url 'add_shops' %}">Добавить магазин</a></li>
                 {% endif %}
             </ul>
         </div>
-        <span class="navbar-text p-2 text-dark">
+        <span class="navbar-text p-2 text-light">
             1 BTC = {% get_price_btc %} руб
         </span>
 
         <span class="navbar-text">
             {% if request.user.is_authenticated %}
-                <div class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-dark" href="{% url 'home' %}" id="navbarDropdownMenuLink"
-                       role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ request.user.username }}
-                    </a>
-                    <ul class="dropdown-menu text-dark" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item" href="{% url 'account' %}">Account</a></li>
-                        <li><a class="dropdown-item" href="{% url 'view_users_shops' %}">Shops</a></li>
-                        <li><a class="dropdown-item" href="{% url 'view_tracker' %}">Tracker</a></li>
-
-                        <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
-                    </ul>
-                </div>
+                <a class="nav-link" href="{% url 'profile' user_id=request.user.id %}" role="button">{{ request.user.username }}</a>
             {% else %}
-                <a class="btn btn-outline-primary" href="{% url 'register' %}">Register</a> | <a class="p-2 text-dark outline" href="{% url 'login' %}">Log in</a>
+                <a class="btn text-light" href="{% url 'register' %}">Register</a> | <a class="btn text-light" href="{% url 'login' %}">Log in</a>
             {% endif %}
         </span>
     </div>

@@ -18,24 +18,22 @@
 
 {% include 'inc/_nav.html '%}
 
-  <div class="container mt-3">
-    <div class="row">
+  <div class="container mt-3 px-4">
+    <div class="row gx-5">
 
-      <div class="col-md-3">
+      <div class="col-md-4 ">
         {% block sidebar %}SIDEBAR{% endblock %}
       </div>
-      <div class="col-md-9">
+      <div class="col-md-8">
         {% block content %}CONTENT{% endblock %}
 
         <nav aria-label="...">
           <ul class="pagination">
 
             {% for p in page_obj.paginator.page_range %}
-
-              <li class="page-item">
-                <a class="page-link" href="?page={{ p }}">{{ p }}</a>
+              <li class="page-item mt-3">
+                <a class="page-link bg-dark text-light" href="?page={{ p }}">{{ p }}</a>
               </li>
-
             {% endfor %}
           </ul>
         </nav>
@@ -45,9 +43,13 @@
       </div>
     </div>
   </div>
-    {% block extend_footer %}
 
+<div class="md-3 mt-3">
+  {% block extend_footer %}
+      {% include 'inc/_footer.html '%}
     {% endblock %}
+</div>
+
 
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
     <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>

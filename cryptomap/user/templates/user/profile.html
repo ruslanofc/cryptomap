@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  {{ title }} - {{ block.super}}
+{% endblock %}
+{% block sidebar %}
+{% include 'inc/_sidebar.html' %}
+
+<ul class="list-group">
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    <a class="dropdown-item" href="{% url 'profile' user_id=request.user.id %}">Profile</a>
+    <i class="fas fa-user-circle"></i>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    <a class="dropdown-item" href="{% url 'view_users_shops' %}">Shops</a>
+    <i class="fas fa-store-alt"></i>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    <a class="dropdown-item" href="{% url 'view_tracker' %}">Tracker</a>
+    <i class="fas fa-chart-line"></i>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    <a class="dropdown-item" href="{% url 'password_change' %}">Change password</a>
+    <i class="fas fa-sign-out-alt"></i>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+    <i class="fas fa-sign-out-alt"></i>
+  </li>
+</ul>
+
+{% endblock %}
+
+{% block content %}
+
+
+<div class="container mt-3">
+    <div class="main-body">
+
+          <!-- Breadcrumb -->
+          <nav aria-label="breadcrumb" class="main-breadcrumb">
+            <ol class="breadcrumb">
+
+              <li class="breadcrumb-item active" aria-current="page">User Profile</li>
+            </ol>
+          </nav>
+          <!-- /Breadcrumb -->
+
+          <div class="row gutters-sm">
+            <div class="col-md-8 mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex flex-column align-items-center text-center">
+                    <img src="https://st.depositphotos.com/2101611/3925/v/600/depositphotos_39258143-stock-illustration-businessman-avatar-profile-picture.jpg" alt="Admin" class="rounded-circle" width="150">
+                    <div class="mt-3">
+                      <h4>{{ user.username }}</h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-8">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="row">
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Email</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {{user.email}}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Date joined</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {{user.date_joined}}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Last login</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {{user.last_login}}
+                    </div>
+                  </div>
+                  <hr>
+
+                  <div class="row">
+                    <div class="col-sm-12">
+                        <a href="{% url 'account' %}" class="btn btn-dark">Edit</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+
+{% endblock content%}

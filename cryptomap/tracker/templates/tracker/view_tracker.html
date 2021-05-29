@@ -9,10 +9,9 @@
 {% block sidebar %}
 {% include 'inc/_sidebar.html' %}
 
-
 <ul class="list-group">
   <li class="list-group-item d-flex justify-content-between align-items-center">
-    <a class="dropdown-item" href="{% url 'account' %}">Account</a>
+    <a class="dropdown-item" href="{% url 'profile' user_id=request.user.id %}">Profile</a>
     <i class="fas fa-user-circle"></i>
   </li>
   <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -22,6 +21,10 @@
   <li class="list-group-item d-flex justify-content-between align-items-center">
     <a class="dropdown-item" href="{% url 'view_tracker' %}">Tracker</a>
     <i class="fas fa-chart-line"></i>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    <a class="dropdown-item" href="{% url 'password_change' %}">Change password</a>
+    <i class="fas fa-sign-out-alt"></i>
   </li>
   <li class="list-group-item d-flex justify-content-between align-items-center">
     <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>

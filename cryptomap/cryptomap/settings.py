@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'django_celery_results',
     'easy_maps',
     'rest_framework',
-    'fontawesome-free',
+
 ]
 
 REST_FRAMEWORK = {
@@ -145,6 +145,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'cryptomap/static')
@@ -154,9 +155,9 @@ STATICFILES_DIRS = [
 # CELERY_BROKEN_URL = 'amqp://localhost'
 CELERY_RESULT_BACKEND = "django-db"
 
-
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URl = '/media/'
+
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

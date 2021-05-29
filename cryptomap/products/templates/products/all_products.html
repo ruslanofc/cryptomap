@@ -4,83 +4,95 @@
 {% include 'inc/_sidebar.html' %}
 
 <div class="search-bar ">
-  <h4>Поиск продукта</h4>
-  <form action="{% url 'searchProduct' %}" method="get"
-        class="form-inline my-2 my-lg-0 d-flex flex-row justify-content-between">
-    <input class="form-control mr-sm-2" type="search" placeholder="Введите название..." name="q">
+    <h4>Поиск продукта</h4>
+    <form action="{% url 'searchProduct' %}" method="get"
+          class="form-inline my-2 my-lg-0 d-flex flex-row justify-content-between">
+        <input class="form-control mr-sm-2" type="search" placeholder="Введите название..." name="q">
 
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-      <span>Search</span>
-    </button>
+        <button class="btn btn-dark " type="submit">
+            <i class="bi bi-search"></i>
+        </button>
 
-  </form>
+    </form>
 </div>
 
 <form action="{% url 'shopFilter' %}" method="get">
-  <div class="left-side mt-3">
-    <h4 class="sear-head editContent">Категории</h4>
-    <ul class="w3layouts-box-list">
-      {% for category in view.get_categories %}
-      <li class="editContent">
-        <input type="checkbox" class="checked" name="category" value="{{ category }}">
-        <span class="span editContent">{{ category }}</span>
-      </li>
-      {% endfor %}
-    </ul>
-  </div>
+    <div class="left-side mt-3">
+        <h4 class="sear-head editContent">Категории</h4>
+        <div class="w3layouts-box-list">
+            {% for category in view.get_categories %}
+            <div class="editContent">
+                <input type="checkbox" class="checked" name="category" value="{{ category }}">
+                <span class="span editContent">{{ category }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
 
-  <div class="left-side mt-3">
-    <h4 class="sear-head editContent">Магазины</h4>
-    <ul class="w3layouts-box-list">
-      {% for shop in view.get_shop %}
-      <li class="editContent">
-        <input type="checkbox" class="checked" name="shop" value="{{ shop }}">
-        <span class="span editContent">{{ shop }}</span>
-      </li>
-      {% endfor %}
-    </ul>
-  </div>
-  <button type="submit" class="btn btn-primary">Найти</button>
+    <div class="left-side mt-3">
+        <h4 class="sear-head editContent">Магазины</h4>
+        <div class="w3layouts-box-list">
+            {% for shop in view.get_shop %}
+            <div   class="editContent">
+                <input type="checkbox" class="checked" name="shop" value="{{ shop }}">
+                <span class="span editContent">{{ shop }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary btn-dark mt-3">Найти</button>
 </form>
 
 {% endblock %}
 
 {% block title %}
-  {{ category.title }}
+{{ category.title }}
 {% endblock %}
 
 {% block content %}
 
 
 {% for product_description in products %}
-<div class="card mb-3 mt-3" style="max-width: 740px;">
-  <div class="row g-0">
-    <div class="col-md-4">
-      {% if product_description.photo %}
-      <img src="{{ product_description.photo.url}}" width="350" class="mr-3" alt="">
-      {% else %}
-      <img src="https://picsum.photos/id/1060/200/300/?blur" alt="">
-      {% endif %}
-    </div>
-    <div class="col-ml-8 ">
-      <div class="card-body mr-1 ml-5">
-        <h5 class="card-title">{{product_description.product.title}}</h5>
-<!--        вывод кнопки магазина и переход на нее-->
-        {% for shop_description in shopsDescriptions%}
-            {% if product_description.product.shop.title == shop_description.shop.title%}
-            <a href="{{ shop_description.get_absolute_url }}">{{shop_description.shop.title}}</a>
-            {% endif %}
-        {% endfor %}
 
-        <p class="card-text">{{product_description.description}}</p>
-        <p class="card-text">{{product_description.product.price_rub|floatformat:"0" }} рублей</p>
-        <p class="card-text">{{product_description.product.price_btc}} btc</p>
-        <a href="{{ product_description.product.get_absolute_url }}" class="btn btn-primary">Поподробнее</a>
-        <p class="card-text"><small class="text-muted">Размещен: {{product_description.product.created_at }}</small></p>
-      </div>
+<div class="card mb-3 mt-3" style="max-width: 540px;">
+    <div class="card p-3 bg-white"><i class="fa fa-apple"></i>
+        <div class="about-product text-center mt-2">
+            {% if product_description.photo %}
+            <img src="{{ product_description.photo.url}}" width="350" class="mr-3" alt="">
+            {% else %}
+            <img src="https://i.imgur.com/3VTaSeb.png" width="300">
+            {% endif %}
+
+            <div>
+                <h4>{{product_description.product.title}}</h4>
+                <h6 class="mt-0 text-black-50">{{product_description.description}}</h6>
+            </div>
+        </div>
+        <div class="stats mt-2">
+            <div class="d-flex justify-content-between p-price"><span>Цена в рублях</span><span>{{product_description.product.price_rub|floatformat:"0" }}</span>
+            </div>
+            <div class="d-flex justify-content-between p-price"><span>Цена в биткоинах</span><span>{{product_description.product.price_btc}}</span>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between total font-weight-bold mt-4"><span>Итог</span><span>$7,197.00</span>
+        </div>
+
+        <div class="inline-block mt-3">
+            {% for shop_description in shopsDescriptions%}
+            {% if product_description.product.shop.title == shop_description.shop.title%}
+            <button onclick="location.href='{{ shop_description.get_absolute_url }}'" type="button"
+                    class="btn btn-light mt-3">В магазин
+            </button>
+            {% endif %}
+            {% endfor %}
+            <button onclick="location.href='{{ product_description.product.get_absolute_url }}'" type="button"
+                    class="btn btn-dark mt-3">Поподробнее
+            </button>
+
+        </div>
     </div>
-  </div>
 </div>
+
 {% endfor %}
 
 {% endblock %}

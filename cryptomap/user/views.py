@@ -6,6 +6,7 @@ from django.views.generic import DetailView, View
 from .models import CustomUser
 from products.models import Product
 from django.core.mail import send_mail
+from django.views.generic import ListView, DetailView
 
 
 def registration_view(request):
@@ -56,6 +57,19 @@ def login_view(request):
 
     context['login_form'] = form
     return render(request, 'user/login.html', context)
+
+
+class Profile(DetailView):
+
+    model = CustomUser
+    pk_url_kwarg = 'user_id'
+    paginate_by = 1
+    template_name = 'user/profile.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user'] = CustomUser.objects.get(pk=self.kwargs['user_id'])
+        return context
 
 
 def account_view(request):

@@ -4,9 +4,12 @@
   {{ title }} - {{ block.super}}
 {% endblock %}
 
+{% block sidebar %}{% endblock %}
+
+
 {% block content %}
 
-<form class="form-signin" method="post">{% csrf_token %}
+<form class="form-signin text-center mt-5" method="post">{% csrf_token %}
 
     <h1 class="h3 mb-3 fw-normal">Register</h1>
 
@@ -41,7 +44,8 @@
         </div>
     {% endif %}
 
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Register</button>
+    <button type="submit" class="w-30 btn btn-lg btn-dark mb-3 mt-5">Register</button>
+
 </form>
 
 {% endblock %}

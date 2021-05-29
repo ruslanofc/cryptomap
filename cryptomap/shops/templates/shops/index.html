@@ -1,50 +1,50 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  Все магазины - {{ block.super}}
+Все магазины - {{ block.super}}
 {% endblock %}
 
 {% block sidebar %}
 {% include 'inc/_sidebar.html' %}
 
 <div class="search-bar ">
-  <h4>Поиск магазина</h4>
-  <form action="{% url 'search' %}" method="get"
-        class="form-inline my-2 my-lg-0 d-flex flex-row justify-content-between">
-    <input class="form-control mr-sm-2" type="search" placeholder="Введите название..." name="q">
+    <h4>Поиск магазина</h4>
+    <form action="{% url 'search' %}" method="get"
+          class="form-inline my-2 my-lg-0 d-flex flex-row justify-content-between">
+        <input class="form-control mr-sm-2" type="search" placeholder="Введите название..." name="q">
 
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-      <span>Search</span>
-    </button>
+        <button class="btn btn-dark " type="submit">
+            <i class="bi bi-search"></i>
+        </button>
 
-  </form>
+    </form>
 </div>
 
 <form action="{% url 'filter' %}" method="get">
-  <div class="left-side mt-3">
-    <h4 class="sear-head editContent">Категории</h4>
-    <ul class="w3layouts-box-list">
-      {% for category in view.get_categories %}
-      <li class="editContent">
-        <input type="checkbox" class="checked" name="category" value="{{ category }}">
-        <span class="span editContent">{{ category }}</span>
-      </li>
-      {% endfor %}
-    </ul>
-  </div>
+    <div class="left-side mt-3">
+        <h4 class="sear-head editContent">Категории</h4>
+        <div class="w3layouts-box-list">
+            {% for category in view.get_categories %}
+            <div class="editContent">
+                <input type="checkbox" class="checked" name="category" value="{{ category }}">
+                <span class="span editContent">{{ category }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
 
-  <div class="left-side mt-3">
-    <h4 class="sear-head editContent">Города</h4>
-    <ul class="w3layouts-box-list">
-      {% for city in view.get_city %}
-      <li class="editContent">
-        <input type="checkbox" class="checked" name="city" value="{{ city }}">
-        <span class="span editContent">{{ city }}</span>
-      </li>
-      {% endfor %}
-    </ul>
-  </div>
-  <button type="submit" class="btn btn-primary">Найти</button>
+    <div class="left-side mt-3">
+        <h4 class="sear-head editContent">Города</h4>
+        <div class="w3layouts-box-list">
+            {% for city in view.get_city %}
+            <div class="editContent">
+                <input type="checkbox" class="checked" name="city" value="{{ city }}">
+                <span class="span editContent">{{ city }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary btn-dark mt-3">Найти</button>
 </form>
 
 {% endblock %}
@@ -52,29 +52,35 @@
 {% block content %}
 
 
+
+
 {% for item in shopsDescriptions %}
+
+
+
+
 <div class="card mt-3 mb-3">
-  <div class="card-header">
-    Категория: <a href="{{ item.category.get_absolute_url }}">{{item.category}}</a>
-  </div>
-  <div class="card-body">
-    <div class="media">
-      {% if item.photo %}
-      <img src="{{ item.photo.url}}" width="350" class="mr-3" alt="">
-      {% else %}
-      <img src="https://picsum.photos/id/1060/200/300/?blur" alt="">
-      {% endif %}
-      <div class="media-body">
-        <h5 class="card-title">{{item.shop.title}}</h5>
-        <p class="card-text">{{item.shop.address}}</p>
-        <p class="card-text">{{item.description| truncatewords:50}}</p>
-        <a href="{{ item.get_absolute_url }}" class="btn btn-primary">Посмотреть детальнее</a>
-      </div>
+    <div class="card-header">
+        Категория: <a href="{{ item.category.get_absolute_url }}">{{item.category}}</a>
     </div>
-  </div>
-  <div class="card-footer text-muted">
-    {{item.shop.created_at }}
-  </div>
+    <div class="card-body">
+        <div class="media">
+            {% if item.photo %}
+            <img src="{{ item.photo.url}}" width="350" class="mr-3" alt="">
+            {% else %}
+            <img src="https://picsum.photos/id/1060/200/300/?blur" alt="">
+            {% endif %}
+            <div class="media-body">
+                <h5 class="card-title">{{item.shop.title}}</h5>
+                <p class="card-text">{{item.shop.address}}</p>
+                <p class="card-text">{{item.description| truncatewords:50}}</p>
+                <a href="{{ item.get_absolute_url }}" class="btn btn-primary">Посмотреть детальнее</a>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer text-muted">
+        {{item.shop.created_at }}
+    </div>
 </div>
 {% endfor %}
 {% endblock %}
