@@ -12,13 +12,13 @@
 
 <h1>Добавление товара</h1>
 
-<form action="{% url 'add_product' shop_id=shop_id %}" method="post">
+<form action="{% url 'add_product' shop_id=shop_id %}" method="post" class="mt-3">
 
     {% csrf_token %}
 
     {{ productsForm.as_p }}
 
-    <button type="submit" class="btn btn-primary btn-block">Добавить товар</button>
+    <button type="submit" class="btn btn-dark btn-block mt-3">Добавить товар</button>
 </form>
 
 {% endblock %}

@@ -1,32 +1,27 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  {{ shops_item.shop.title }} - {{ block.super}}
+  Ваши магазины - {{ block.super}}
 {% endblock %}
 
 {% block sidebar %}
 {% include 'inc/_sidebar.html' %}
 
-<ul class="list-group">
-  <li class="list-group-item d-flex justify-content-between align-items-center">
-    <a class="dropdown-item" href="{% url 'profile' user_id=request.user.id %}">Profile</a>
-    <i class="fas fa-user-circle"></i>
+<ul class="nav flex-column ">
+  <li class="nav-item">
+    <a class="nav-link text-dark" aria-current="page" href="{% url 'profile' user_id=request.user.id %}">Профиль</a>
   </li>
-  <li class="list-group-item d-flex justify-content-between align-items-center">
-    <a class="dropdown-item" href="{% url 'view_users_shops' %}">Shops</a>
-    <i class="fas fa-store-alt"></i>
+  <li class="nav-item">
+    <a class="nav-link text-dark" href="{% url 'view_users_shops' %}">Ваши магазины</a>
   </li>
-  <li class="list-group-item d-flex justify-content-between align-items-center">
-    <a class="dropdown-item" href="{% url 'view_tracker' %}">Tracker</a>
-    <i class="fas fa-chart-line"></i>
+  <li class="nav-item">
+    <a class="nav-link text-dark" href="{% url 'view_tracker' %}">Список отслеживаемых</a>
   </li>
-  <li class="list-group-item d-flex justify-content-between align-items-center">
-    <a class="dropdown-item" href="{% url 'password_change' %}">Change password</a>
-    <i class="fas fa-sign-out-alt"></i>
+  <li class="nav-item">
+    <a class="nav-link text-dark" href="{% url 'password_change' %}">Сменить пароль</a>
   </li>
-  <li class="list-group-item d-flex justify-content-between align-items-center">
-    <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
-    <i class="fas fa-sign-out-alt"></i>
+  <li class="nav-item">
+    <a class="nav-link text-dark" href="{% url 'logout' %}">Выйти</a>
   </li>
 </ul>
 
@@ -34,27 +29,44 @@
 
 {% block content %}
 
-{% for item in shops %}
-<div class="card mt-3 mb-3">
-  <div class="card-header">
-    Название: <p>{{item.title}}</p>
-  </div>
-  <div class="card-body">
-    <div class="media">
-      {% if item.photo %}
-      <img src="{{ item.photo.url}}" width="350" class="mr-3" alt="">
-      {% else %}
-      <img src="https://picsum.photos/id/1060/200/300/?blur" alt="">
-      {% endif %}
-      <div class="media-body">
-        <p class="card-text">{{item.address}}</p>
-        <a href="{% url 'add_product' item.pk %}" class="btn btn-primary">Добавить товары</a>
-      </div>
+
+{% for shop in shopsDescriptions %}
+
+<div class="card mb-3 mt-3" style="max-width: 540px;">
+    <div class="p-3 bg-white">
+        <div class="about-product text-center mt-2">
+            {% if shop.photo %}
+            <img src="{{ shop.photo.url}}" width="350" class="mr-3" alt="">
+            {% else %}
+            <img src="http://s1.iconbird.com/ico/2014/1/606/w512h5121390848250shop512.png" width="300">
+            {% endif %}
+            <div class="mt-3">
+                <h4>{{shop.shop.title}}</h4>
+                <h6 class="mt-0 text-black-50">{{shop.description}}</h6>
+            </div>
+        </div>
+        <div class="stats mt-3">
+            <div class="d-flex justify-content-between p-price">
+                <span>Категория</span><span>{{shop.category.title}}</span>
+            </div>
+            <div class="d-flex justify-content-between p-price">
+              <span>Адрес</span><span>{{shop.shop.address}}</span>
+            </div>
+            <div class="d-flex justify-content-between p-price">
+              <span>Почта</span><span>{{shop.email}}</span>
+            </div>
+            <div class="d-flex justify-content-between p-price">
+              <span>Владелец</span><span>{{shop.shop.owner.username}}</span>
+            </div>
+            <div class="d-flex justify-content-between p-price">
+              <span>Телеграмм</span><span>{{shop.telegram_url}}</span>
+            </div>
+        </div>
+
+        <div class="inline-block mt-3">
+            <a href="{% url 'add_product' shop.shop_id %}" class="btn btn-dark">Добавить товары</a>
+        </div>
     </div>
-  </div>
-  <div class="card-footer text-muted">
-    {{item.created_at }}
-  </div>
 </div>
 
 {% endfor %}

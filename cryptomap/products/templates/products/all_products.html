@@ -55,12 +55,12 @@
 {% for product_description in products %}
 
 <div class="card mb-3 mt-3" style="max-width: 540px;">
-    <div class="card p-3 bg-white"><i class="fa fa-apple"></i>
+    <div class="p-3 bg-white"><i class="fa fa-apple"></i>
         <div class="about-product text-center mt-2">
             {% if product_description.photo %}
-            <img src="{{ product_description.photo.url}}" width="350" class="mr-3" alt="">
+            <img src="{{ product_description.photo.url}}" width="300" height="230" class="mr-3 rounded" alt="">
             {% else %}
-            <img src="https://i.imgur.com/3VTaSeb.png" width="300">
+            <img src="https://www.orientalheritageagra.com/wp-content/uploads/2019/03/product-png-image-59158.png" class="rounded" width="300" height="230">
             {% endif %}
 
             <div>

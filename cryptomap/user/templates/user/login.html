@@ -1,10 +1,15 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  {{ title }} - {{ block.super}}
+  Вход - {{ block.super}}
 {% endblock %}
 
-{% block sidebar %}{% endblock %}
+{% block sidebar %}
+ <div class="card-body mt-5">
+    <h5 class="card-title">О проекте</h5>
+    <p class="card-text">Наша цель популизация цифровых активов в качестве средства оплаты</p>
+  </div>
+{% endblock %}
 
 {% block content %}
 
@@ -13,16 +18,16 @@
 
 <form class="form-signin text-center mt-5" method="post">{% csrf_token %}
 
-    <h1 class="h3 mb-3 fw-normal">Login</h1>
+    <h1 class="h3 mb-3 fw-normal">Вход</h1>
 
     <div class="form-floating mb-3">
         <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-        <label for="floatingInput">Email address</label>
+        <label for="floatingInput">Почта</label>
     </div>
 
     <div class="form-floating mb-3">
         <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
-        <label for="floatingPassword">Password</label>
+        <label for="floatingPassword">Пароль</label>
     </div>
 
     {% for field in login_form  %}
@@ -39,9 +44,9 @@
         </div>
     {% endif %}
 
-    <div class="button-group mt-5 ">
-        <button type="submit" class="w-30 btn btn-lg btn-dark mb-3">Sign in</button>
-        <a class="w-30 btn btn-lg btn-secondary mb-3" href="{% url 'password_reset' %}">Reset password</a>
+    <div class="button-group my-5 ">
+        <button type="submit" class="w-30 btn btn-lg btn-dark mb-3">Войти</button>
+        <a class="w-30 btn btn-lg btn-secondary mb-3" href="{% url 'password_reset' %}">Сбросить пароль</a>
     </div>
 
 </form>

@@ -14,7 +14,7 @@
   <title>{% block title %}Crypto map{% endblock %}</title>
 
 </head>
-<body>
+<body style="font-family: ' Verdana, 'Trebuchet MS', Geneva, sans-serif; ';">
 
 {% include 'inc/_nav.html '%}
 
@@ -31,7 +31,7 @@
           <ul class="pagination">
 
             {% for p in page_obj.paginator.page_range %}
-              <li class="page-item mt-3">
+              <li class="page-item my-3">
                 <a class="page-link bg-dark text-light" href="?page={{ p }}">{{ p }}</a>
               </li>
             {% endfor %}
@@ -44,7 +44,7 @@
     </div>
   </div>
 
-<div class="md-3 mt-3">
+<div class="md-3 mt-5 position-sticky-bottom ">
   {% block extend_footer %}
       {% include 'inc/_footer.html '%}
     {% endblock %}

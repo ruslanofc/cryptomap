@@ -56,7 +56,7 @@ class ProductDetailView(DetailView):
 
 class ProductsView(ListView, ShopCategories):
 
-    paginate_by = 2
+    paginate_by = 3
     model = ProductDescription
     template_name = 'products/all_products.html'
     context_object_name = 'products'

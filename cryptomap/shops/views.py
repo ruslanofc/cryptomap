@@ -43,6 +43,7 @@ def search(request):
     shop = Shop.objects.get(title__icontains=request.GET.get('q'))
     shop_item = ShopDescription.objects.get(shop_id=shop.id)
     products = Product.objects.filter(shop=shop.id)
+
     return render(request, 'shops/view_shops.html', {"shop": shop_item, "products": products})
 
 
@@ -78,15 +79,16 @@ class ViewShop(DetailView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['shop'] = ShopDescription.objects.get(shop_id=self.kwargs['shops_id'])
-        context['products'] = Product.objects.filter(shop=self.kwargs['shops_id'])
+        context['products'] = ProductDescription.objects.filter(product_id__in=Product.objects.filter(shop=self.kwargs['shops_id']))
+
         return context
 
 
 def view_users_shops(request):
     user = CustomUser.objects.get(username=request.user.username)
-    shops = Shop.objects.filter(owner=user)
+    shops = ShopDescription.objects.filter(shop_id__in=Shop.objects.filter(owner=user))
     context = {
-        'shops': shops,
+        'shopsDescriptions': shops,
     }
     return render(request, template_name='shops/view_users_shops.html', context=context)
 

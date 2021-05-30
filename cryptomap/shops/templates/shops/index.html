@@ -54,33 +54,46 @@
 
 
 
-{% for item in shopsDescriptions %}
+{% for shop in shopsDescriptions %}
 
-
-
-
-<div class="card mt-3 mb-3">
-    <div class="card-header">
-        Категория: <a href="{{ item.category.get_absolute_url }}">{{item.category}}</a>
-    </div>
-    <div class="card-body">
-        <div class="media">
-            {% if item.photo %}
-            <img src="{{ item.photo.url}}" width="350" class="mr-3" alt="">
+<div class="card mb-3 mt-3" style="max-width: 540px;">
+    <div class="p-3 bg-white">
+        <div class="about-product text-center mt-2">
+            {% if shop.photo %}
+            <img src="{{ shop.photo.url}}" width="350" class="mr-3" alt="">
             {% else %}
-            <img src="https://picsum.photos/id/1060/200/300/?blur" alt="">
+            <img src="http://s1.iconbird.com/ico/2014/1/606/w512h5121390848250shop512.png" width="300">
             {% endif %}
-            <div class="media-body">
-                <h5 class="card-title">{{item.shop.title}}</h5>
-                <p class="card-text">{{item.shop.address}}</p>
-                <p class="card-text">{{item.description| truncatewords:50}}</p>
-                <a href="{{ item.get_absolute_url }}" class="btn btn-primary">Посмотреть детальнее</a>
+            <div class="mt-3">
+                <h4>{{shop.shop.title}}</h4>
+                <h6 class="mt-0 text-black-50">{{shop.description}}</h6>
             </div>
         </div>
-    </div>
-    <div class="card-footer text-muted">
-        {{item.shop.created_at }}
+        <div class="stats mt-3">
+            <div class="d-flex justify-content-between p-price">
+                <span>Категория</span><span>{{shop.category.title}}</span>
+            </div>
+            <div class="d-flex justify-content-between p-price">
+              <span>Адрес</span><span>{{shop.shop.address}}</span>
+            </div>
+            <div class="d-flex justify-content-between p-price">
+              <span>Почта</span><span>{{shop.email}}</span>
+            </div>
+            <div class="d-flex justify-content-between p-price">
+              <span>Владелец</span><span>{{shop.shop.owner.username}}</span>
+            </div>
+            <div class="d-flex justify-content-between p-price">
+              <span>Телеграмм</span><span>{{shop.telegram_url}}</span>
+            </div>
+        </div>
+
+        <div class="inline-block mt-3">
+            <button onclick="location.href='{{ shop.get_absolute_url }}'" type="button"
+                    class="btn btn-dark mt-3">В магазин
+            </button>
+        </div>
     </div>
 </div>
+
 {% endfor %}
 {% endblock %}

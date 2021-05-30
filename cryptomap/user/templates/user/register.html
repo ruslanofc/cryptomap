@@ -1,33 +1,38 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  {{ title }} - {{ block.super}}
+  Регистрация - {{ block.super}}
 {% endblock %}
 
-{% block sidebar %}{% endblock %}
+{% block sidebar %}
+ <div class="card-body mt-5">
+    <h5 class="card-title">О проекте</h5>
+    <p class="card-text">Наша цель популизация цифровых активов в качестве средства оплаты</p>
+  </div>
+{% endblock %}
 
 
 {% block content %}
 
 <form class="form-signin text-center mt-5" method="post">{% csrf_token %}
 
-    <h1 class="h3 mb-3 fw-normal">Register</h1>
+    <h1 class="h3 mb-3 fw-normal">Регистрация</h1>
 
     <div class="form-floating mb-3">
         <input type="email" name="email" class="form-control" id="floatingInput" required placeholder="Email address">
-        <label for="floatingInput">Email address</label>
+        <label for="floatingInput">Почта</label>
     </div>
     <div class="form-floating mb-3">
         <input type="text" name="username" class="form-control" id="inputUsername" required placeholder="Username">
-        <label for="inputUsername">Username</label>
+        <label for="inputUsername">Имя пользователя</label>
     </div>
     <div class="form-floating mb-3">
         <input type="password" name="password1" class="form-control" id="inputPassword1" required placeholder="Password">
-        <label for="inputPassword1">Password</label>
+        <label for="inputPassword1">Пароль</label>
     </div>
     <div class="form-floating mb-3">
         <input type="password" name="password2" class="form-control" id="inputPassword2" required placeholder="Confirm Password">
-        <label for="inputPassword2">Confirm password</label>
+        <label for="inputPassword2">Подтведить пароль</label>
     </div>
 
     {% for field in registration_form  %}
@@ -44,7 +49,7 @@
         </div>
     {% endif %}
 
-    <button type="submit" class="w-30 btn btn-lg btn-dark mb-3 mt-5">Register</button>
+    <button type="submit" class="w-30 btn btn-lg btn-dark mb-3 mt-5">Регистрация</button>
 
 </form>
 
