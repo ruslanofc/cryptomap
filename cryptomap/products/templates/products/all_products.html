@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load tracker_tags %}
+
 {% block sidebar %}
 {% include 'inc/_sidebar.html' %}
 
@@ -69,12 +71,20 @@
             </div>
         </div>
         <div class="stats mt-2">
-            <div class="d-flex justify-content-between p-price"><span>Цена в рублях</span><span>{{product_description.product.price_rub|floatformat:"0" }}</span>
+            <div class="d-flex justify-content-between p-price"><span>Цена в рублях</span><span>{{product_description.product.price_rub|floatformat:"0" }} p.</span>
             </div>
-            <div class="d-flex justify-content-between p-price"><span>Цена в биткоинах</span><span>{{product_description.product.price_btc}}</span>
+            <div class="d-flex justify-content-between p-price"><span>Цена в биткоинах</span><span>{{product_description.product.price_btc}} btc</span>
             </div>
         </div>
-        <div class="d-flex justify-content-between total font-weight-bold mt-4"><span>Итог</span><span>$7,197.00</span>
+
+
+
+        {% if False%}
+            <div class="d-flex justify-content-between total font-weight-bold mt-4"><span>Итог</span><span class="bg-danger rounded p-3">{% multiply price_btc product_description.product.price_btc %}</span>
+        {% else %}
+                <div class="d-flex justify-content-between total font-weight-bold mt-4"><div class="p-1"><span>Итог</span></div><div class="bg-success rounded p-1"><span class="bg-success rounded">{% multiply price_btc product_description.product.price_btc %}</span></div>
+        {% endif %}
+
         </div>
 
         <div class="inline-block mt-3">

@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+
+from tracker.bitcoin import get_btc_price
 from .forms import *
 from .models import *
 from django.views.generic import ListView, DetailView
@@ -64,6 +66,7 @@ class ProductsView(ListView, ShopCategories):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['shopsDescriptions'] = ShopDescription.objects.all()
+        context['price_btc'] = get_btc_price()
         return context
 
 

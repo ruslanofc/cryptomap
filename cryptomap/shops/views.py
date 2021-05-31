@@ -1,6 +1,8 @@
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+
+from tracker.bitcoin import get_btc_price
 from .forms import *
 from django.core.paginator import Paginator
 from .models import *
@@ -80,6 +82,7 @@ class ViewShop(DetailView):
         context = super().get_context_data(**kwargs)
         context['shop'] = ShopDescription.objects.get(shop_id=self.kwargs['shops_id'])
         context['products'] = ProductDescription.objects.filter(product_id__in=Product.objects.filter(shop=self.kwargs['shops_id']))
+        context['price_btc'] = get_btc_price()
 
         return context
 
