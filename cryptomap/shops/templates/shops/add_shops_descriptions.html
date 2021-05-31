@@ -6,6 +6,11 @@
 
 {% block sidebar %}
 {% include 'inc/_sidebar.html' %}
+
+ <div class="card-body mt-3 ">
+    <h5 class="card-title">О проекте</h5>
+    <p class="card-text">Наша цель популизация цифровых активов в качестве средства оплаты</p>
+  </div>
 {% endblock %}
 
 {% block content %}
@@ -18,7 +23,7 @@
 
     {{ shopsDescriptionForm.as_p }}
 
-    <button type="submit" class="btn btn-primary btn-block">Добавить магазин</button>
+    <button type="submit" class="btn btn-dark btn-block">Добавить магазин</button>
 </form>
 
 {% endblock %}
